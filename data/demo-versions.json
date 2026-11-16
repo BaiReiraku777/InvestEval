@@ -1,0 +1,29 @@
+{
+  "label": "DEMO",
+  "description": "虚构版本标签，用于对比预置回答和评测结果。",
+  "baseline": {
+    "modelVersion": "DEMO Agent 1.8",
+    "promptVersion": "DEMO Prompt v2.3",
+    "datasetVersion": "DEMO Eval Set v1.2"
+  },
+  "groups": [
+    {
+      "field": "modelVersion",
+      "label": "模型",
+      "version": "DEMO Agent 1.9",
+      "description": "固定 Prompt、数据集和用户画像，对比同一问题在两个样例模型版本中的回答。"
+    },
+    {
+      "field": "promptVersion",
+      "label": "Prompt",
+      "version": "DEMO Prompt v2.4",
+      "description": "固定模型、数据集和用户画像，对比两套回答提示词的样例结果。"
+    },
+    {
+      "field": "datasetVersion",
+      "label": "数据集",
+      "version": "DEMO Eval Set v1.3",
+      "description": "复用同一回答。v1.3 增加历史行情归档和净值精度核验，进一步说明原有归因。"
+    }
+  ]
+}

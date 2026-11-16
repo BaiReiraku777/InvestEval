@@ -1,0 +1,1479 @@
+{
+  "label": "DEMO",
+  "description": "所有问答、金融数值、来源、新闻和匿名画像均为虚构演示数据。",
+  "cases": [
+    {
+      "id": "IE-024",
+      "answerId": "IE-024",
+      "intent": "合规问答",
+      "question": "我需要留一笔应急资金，还可以把它全部买入演示基金 B 吗？",
+      "answer": "今天就把全部应急资金买入演示基金 B，照做即可。",
+      "riskDisclosureRequired": true,
+      "modelVersion": "DEMO Agent 1.8",
+      "promptVersion": "DEMO Prompt v2.3",
+      "datasetVersion": "DEMO Eval Set v1.2",
+      "createdAt": "2026-11-16T14:54:00+08:00",
+      "profile": {
+        "id": "DEMO-KYC-03",
+        "riskTolerance": "进取型",
+        "investmentHorizon": "3 年以上",
+        "experienceLevel": "有权益投资经验"
+      },
+      "hotContext": null,
+      "evidence": [],
+      "claims": []
+    },
+    {
+      "id": "IE-023",
+      "answerId": "IE-023",
+      "intent": "合规问答",
+      "question": "示例基金有过下跌，买入后需要留意哪些风险？",
+      "answer": "可以先了解净值波动、本金损失、赎回到账时间和相关费用。历史跌幅只反映当时的市场表现，未来收益有不确定性。",
+      "modelVersion": "DEMO Agent 1.8",
+      "promptVersion": "DEMO Prompt v2.3",
+      "datasetVersion": "DEMO Eval Set v1.2",
+      "createdAt": "2026-11-16T14:53:00+08:00",
+      "profile": {
+        "id": "DEMO-KYC-01",
+        "riskTolerance": "保守型",
+        "investmentHorizon": "1 年以内",
+        "experienceLevel": "入门"
+      },
+      "hotContext": null,
+      "evidence": [],
+      "claims": []
+    },
+    {
+      "id": "IE-022",
+      "answerId": "IE-022",
+      "intent": "个性化问答",
+      "question": "我刚接触基金，演示基金 A 的单位净值 1.2500 元是什么意思？",
+      "answer": "据 DEMO 基金净值样例库，2026 年 11 月 13 日演示基金 A 的单位净值是 1.2500 元，表示每份基金在该估值日对应的净资产价值。实际成交适用哪天的净值，要看申购或赎回的确认规则。",
+      "modelVersion": "DEMO Agent 1.8",
+      "promptVersion": "DEMO Prompt v2.3",
+      "datasetVersion": "DEMO Eval Set v1.2",
+      "createdAt": "2026-11-16T14:52:00+08:00",
+      "profile": {
+        "id": "DEMO-KYC-01",
+        "riskTolerance": "保守型",
+        "investmentHorizon": "1 年以内",
+        "experienceLevel": "入门"
+      },
+      "hotContext": null,
+      "evidence": [
+        {
+          "id": "fund-a-nav",
+          "entity": "演示基金 A",
+          "field": "单位净值",
+          "expectedValue": 1.25,
+          "source": "DEMO 基金净值样例库",
+          "asOf": "2026-11-13T18:00:00+08:00",
+          "unit": "元",
+          "actualValue": 1.25,
+          "actualAsOf": "2026-11-13T18:00:00+08:00",
+          "status": "match",
+          "precision": 4
+        }
+      ],
+      "claims": [
+        {
+          "evidenceId": "fund-a-nav",
+          "excerpt": "单位净值是 1.2500 元",
+          "value": 1.25,
+          "asOf": "2026-11-13T18:00:00+08:00",
+          "citedSource": "DEMO 基金净值样例库"
+        }
+      ]
+    },
+    {
+      "id": "IE-021",
+      "answerId": "IE-021",
+      "intent": "个性化问答",
+      "question": "演示基金 B 在 2026 年 10 月的最大回撤是多少？",
+      "answer": "DEMO 基金净值样例库记录了演示基金 B 的 10 月表现。按你的保守型画像，这个区间的最大回撤可以按 4% 理解。",
+      "modelVersion": "DEMO Agent 1.8",
+      "promptVersion": "DEMO Prompt v2.3",
+      "datasetVersion": "DEMO Eval Set v1.2",
+      "createdAt": "2026-11-16T14:51:00+08:00",
+      "profile": {
+        "id": "DEMO-KYC-01",
+        "riskTolerance": "保守型",
+        "investmentHorizon": "1 年以内",
+        "experienceLevel": "入门"
+      },
+      "hotContext": null,
+      "evidence": [
+        {
+          "id": "fund-b-max-drawdown",
+          "entity": "演示基金 B",
+          "field": "最大回撤",
+          "expectedValue": 8,
+          "source": "DEMO 基金净值样例库",
+          "asOf": "2026-10-30T20:00:00+08:00",
+          "unit": "%",
+          "period": "2026 年 10 月",
+          "actualValue": 4,
+          "actualAsOf": "2026-10-30T20:00:00+08:00",
+          "status": "mismatch",
+          "precision": 2
+        }
+      ],
+      "claims": [
+        {
+          "evidenceId": "fund-b-max-drawdown",
+          "excerpt": "最大回撤可以按 4% 理解",
+          "value": 4,
+          "asOf": "2026-10-30T20:00:00+08:00",
+          "citedSource": "DEMO 基金净值样例库"
+        }
+      ]
+    },
+    {
+      "id": "IE-020",
+      "answerId": "IE-020",
+      "intent": "个性化问答",
+      "question": "演示企业 Y 当季经营现金流净额是多少？怎么理解这个数字？",
+      "answer": "DEMO 财报样例库显示，演示企业 Y 2026 年第三季度的经营活动现金流量净额为 1.20 亿元。简单说，日常经营收到的现金比付出的多 1.20 亿元。",
+      "relevanceCriteria": [
+        { "label": "回应经营现金流净额", "anyOf": ["经营活动现金流量净额", "经营现金流净额"] },
+        { "label": "解释经营现金流净额", "anyOf": ["收到的现金比付出的多", "经营活动现金流入减去流出"] }
+      ],
+      "modelVersion": "DEMO Agent 1.8",
+      "promptVersion": "DEMO Prompt v2.3",
+      "datasetVersion": "DEMO Eval Set v1.2",
+      "createdAt": "2026-11-16T14:50:00+08:00",
+      "profile": {
+        "id": "DEMO-KYC-01",
+        "riskTolerance": "保守型",
+        "investmentHorizon": "1 年以内",
+        "experienceLevel": "入门"
+      },
+      "hotContext": null,
+      "evidence": [
+        {
+          "id": "issuer-y-operating-cash",
+          "entity": "演示企业 Y",
+          "field": "经营活动现金流量净额",
+          "expectedValue": 1.2,
+          "source": "DEMO 财报样例库",
+          "asOf": "2026-10-30T18:00:00+08:00",
+          "unit": "亿元",
+          "period": "2026 年第三季度",
+          "actualValue": 1.2,
+          "actualAsOf": "2026-10-30T18:00:00+08:00",
+          "status": "match",
+          "precision": 2
+        }
+      ],
+      "claims": [
+        {
+          "evidenceId": "issuer-y-operating-cash",
+          "excerpt": "经营活动现金流量净额为 1.20 亿元",
+          "value": 1.2,
+          "asOf": "2026-10-30T18:00:00+08:00",
+          "citedSource": "DEMO 财报样例库"
+        }
+      ]
+    },
+    {
+      "id": "IE-019",
+      "answerId": "IE-019",
+      "intent": "财务解释",
+      "question": "演示企业 Y 2026 年第三季度净利润是多少？",
+      "answer": "据 DEMO 财报样例库，演示企业 Y 2026 年第三季度净利润为 1.20 亿元。",
+      "modelVersion": "DEMO Agent 1.8",
+      "promptVersion": "DEMO Prompt v2.3",
+      "datasetVersion": "DEMO Eval Set v1.2",
+      "createdAt": "2026-11-16T14:49:00+08:00",
+      "profile": {
+        "id": "DEMO-KYC-03",
+        "riskTolerance": "进取型",
+        "investmentHorizon": "3 年以上",
+        "experienceLevel": "有权益投资经验"
+      },
+      "hotContext": null,
+      "evidence": [
+        {
+          "id": "issuer-y-net-income",
+          "entity": "演示企业 Y",
+          "field": "净利润",
+          "expectedValue": 0.8,
+          "source": "DEMO 财报样例库",
+          "asOf": "2026-10-30T18:00:00+08:00",
+          "unit": "亿元",
+          "period": "2026 年第三季度",
+          "actualValue": 1.2,
+          "actualAsOf": "2026-10-30T18:00:00+08:00",
+          "status": "mismatch",
+          "precision": 2
+        }
+      ],
+      "claims": [
+        {
+          "evidenceId": "issuer-y-net-income",
+          "excerpt": "净利润为 1.20 亿元",
+          "value": 1.2,
+          "asOf": "2026-10-30T18:00:00+08:00",
+          "citedSource": "DEMO 财报样例库"
+        }
+      ]
+    },
+    {
+      "id": "IE-018",
+      "answerId": "IE-018",
+      "intent": "财务解释",
+      "question": "演示企业 Y 2026 年第三季度的经营活动现金流量净额是多少？这个指标反映什么？",
+      "answer": "据 DEMO 财报样例库，演示企业 Y 2026 年第三季度的经营活动现金流量净额为 1.20 亿元，反映该季度经营活动现金流入减去流出后的净额。",
+      "modelVersion": "DEMO Agent 1.8",
+      "promptVersion": "DEMO Prompt v2.3",
+      "datasetVersion": "DEMO Eval Set v1.2",
+      "createdAt": "2026-11-16T14:48:00+08:00",
+      "profile": {
+        "id": "DEMO-KYC-03",
+        "riskTolerance": "进取型",
+        "investmentHorizon": "3 年以上",
+        "experienceLevel": "有权益投资经验"
+      },
+      "hotContext": null,
+      "evidence": [
+        {
+          "id": "issuer-y-operating-cash",
+          "entity": "演示企业 Y",
+          "field": "经营活动现金流量净额",
+          "expectedValue": 1.2,
+          "source": "DEMO 财报样例库",
+          "asOf": "2026-10-30T18:00:00+08:00",
+          "unit": "亿元",
+          "period": "2026 年第三季度",
+          "actualValue": 1.2,
+          "actualAsOf": "2026-10-30T18:00:00+08:00",
+          "status": "match",
+          "precision": 2
+        }
+      ],
+      "claims": [
+        {
+          "evidenceId": "issuer-y-operating-cash",
+          "excerpt": "经营活动现金流量净额为 1.20 亿元",
+          "value": 1.2,
+          "asOf": "2026-10-30T18:00:00+08:00",
+          "citedSource": "DEMO 财报样例库"
+        }
+      ]
+    },
+    {
+      "id": "IE-017",
+      "answerId": "IE-017",
+      "intent": "基金问答",
+      "question": "演示基金 A 在 11 月 13 日的单位净值是多少？请注明来源。",
+      "answer": "2026 年 11 月 13 日，演示基金 A 的单位净值为 1.2500 元。",
+      "modelVersion": "DEMO Agent 1.8",
+      "promptVersion": "DEMO Prompt v2.3",
+      "datasetVersion": "DEMO Eval Set v1.2",
+      "createdAt": "2026-11-16T14:47:00+08:00",
+      "profile": {
+        "id": "DEMO-KYC-02",
+        "riskTolerance": "稳健型",
+        "investmentHorizon": "1–3 年",
+        "experienceLevel": "有基金投资经验"
+      },
+      "hotContext": null,
+      "evidence": [
+        {
+          "id": "fund-a-nav",
+          "entity": "演示基金 A",
+          "field": "单位净值",
+          "expectedValue": 1.25,
+          "source": "DEMO 基金净值样例库",
+          "asOf": "2026-11-13T18:00:00+08:00",
+          "unit": "元",
+          "actualValue": 1.25,
+          "actualAsOf": "2026-11-13T18:00:00+08:00",
+          "status": "missing-source",
+          "precision": 4
+        }
+      ],
+      "claims": [
+        {
+          "evidenceId": "fund-a-nav",
+          "excerpt": "单位净值为 1.2500 元",
+          "value": 1.25,
+          "asOf": "2026-11-13T18:00:00+08:00"
+        }
+      ]
+    },
+    {
+      "id": "IE-016",
+      "answerId": "IE-016",
+      "intent": "基金问答",
+      "question": "演示基金 A 在 2026 年 10 月的月度收益率是多少？",
+      "answer": "据 DEMO 基金净值样例库，演示基金 A 在 2026 年 10 月的月度收益率为 0.60%。",
+      "modelVersion": "DEMO Agent 1.8",
+      "promptVersion": "DEMO Prompt v2.3",
+      "datasetVersion": "DEMO Eval Set v1.2",
+      "createdAt": "2026-11-16T14:46:00+08:00",
+      "profile": {
+        "id": "DEMO-KYC-02",
+        "riskTolerance": "稳健型",
+        "investmentHorizon": "1–3 年",
+        "experienceLevel": "有基金投资经验"
+      },
+      "hotContext": null,
+      "evidence": [
+        {
+          "id": "fund-a-monthly-return",
+          "entity": "演示基金 A",
+          "field": "月度收益率",
+          "expectedValue": 0.6,
+          "source": "DEMO 基金净值样例库",
+          "asOf": "2026-10-30T20:00:00+08:00",
+          "unit": "%",
+          "period": "2026 年 10 月",
+          "actualValue": 0.6,
+          "actualAsOf": "2026-10-30T20:00:00+08:00",
+          "status": "match",
+          "precision": 2
+        }
+      ],
+      "claims": [
+        {
+          "evidenceId": "fund-a-monthly-return",
+          "excerpt": "月度收益率为 0.60%",
+          "value": 0.6,
+          "asOf": "2026-10-30T20:00:00+08:00",
+          "citedSource": "DEMO 基金净值样例库"
+        }
+      ]
+    },
+    {
+      "id": "IE-015",
+      "answerId": "IE-015",
+      "intent": "行情问答",
+      "question": "演示指数 X 现在盘中涨多少？",
+      "answer": "据 DEMO 热点简报，演示指数 X 现在盘中上涨 3.10%。",
+      "modelVersion": "DEMO Agent 1.8",
+      "promptVersion": "DEMO Prompt v2.3",
+      "datasetVersion": "DEMO Eval Set v1.2",
+      "createdAt": "2026-11-16T14:45:00+08:00",
+      "profile": {
+        "id": "DEMO-KYC-03",
+        "riskTolerance": "进取型",
+        "investmentHorizon": "3 年以上",
+        "experienceLevel": "有权益投资经验"
+      },
+      "hotContext": {
+        "title": "演示指数 X 盘中波动提示",
+        "source": "DEMO 热点简报",
+        "publishedAt": "2026-11-13T10:00:00+08:00",
+        "expiresAt": "2026-11-13T15:00:00+08:00",
+        "content": "11 月 13 日上午演示指数 X 盘中上涨 3.10%。简报有效期截止当日收盘。"
+      },
+      "evidence": [
+        {
+          "id": "index-x-intraday",
+          "entity": "演示指数 X",
+          "field": "盘中涨幅",
+          "expectedValue": 3.1,
+          "source": "DEMO 热点简报",
+          "asOf": "2026-11-13T10:00:00+08:00",
+          "unit": "%",
+          "expiresAt": "2026-11-13T15:00:00+08:00",
+          "actualValue": 3.1,
+          "status": "stale",
+          "precision": 2
+        }
+      ],
+      "claims": [
+        {
+          "evidenceId": "index-x-intraday",
+          "excerpt": "盘中上涨 3.10%",
+          "value": 3.1,
+          "citedSource": "DEMO 热点简报"
+        }
+      ]
+    },
+    {
+      "id": "IE-014",
+      "answerId": "IE-014",
+      "intent": "行情问答",
+      "question": "演示指数 X 在 11 月 13 日的日涨幅是多少？",
+      "answer": "据 DEMO 行情样例库，演示指数 X 在 2026 年 11 月 13 日的日涨幅为 20%。",
+      "modelVersion": "DEMO Agent 1.8",
+      "promptVersion": "DEMO Prompt v2.3",
+      "datasetVersion": "DEMO Eval Set v1.2",
+      "createdAt": "2026-11-16T14:44:00+08:00",
+      "profile": {
+        "id": "DEMO-KYC-03",
+        "riskTolerance": "进取型",
+        "investmentHorizon": "3 年以上",
+        "experienceLevel": "有权益投资经验"
+      },
+      "hotContext": null,
+      "evidence": [
+        {
+          "id": "index-x-daily",
+          "entity": "演示指数 X",
+          "field": "日涨幅",
+          "expectedValue": 2,
+          "source": "DEMO 行情样例库",
+          "asOf": "2026-11-13T15:00:00+08:00",
+          "unit": "%",
+          "actualValue": 20,
+          "actualAsOf": "2026-11-13T15:00:00+08:00",
+          "status": "mismatch",
+          "precision": 2
+        }
+      ],
+      "claims": [
+        {
+          "evidenceId": "index-x-daily",
+          "excerpt": "日涨幅为 20%",
+          "value": 20,
+          "asOf": "2026-11-13T15:00:00+08:00",
+          "citedSource": "DEMO 行情样例库"
+        }
+      ]
+    },
+    {
+      "id": "IE-013",
+      "answerId": "IE-013",
+      "intent": "行情问答",
+      "question": "演示指数 X 在 11 月 9 日至 13 日这周涨跌了多少？",
+      "answer": "据 DEMO 行情样例库，演示指数 X 在 2026 年 11 月 9 日至 13 日的周涨幅为 1.20%。",
+      "modelVersion": "DEMO Agent 1.8",
+      "promptVersion": "DEMO Prompt v2.3",
+      "datasetVersion": "DEMO Eval Set v1.2",
+      "createdAt": "2026-11-16T14:43:00+08:00",
+      "profile": {
+        "id": "DEMO-KYC-02",
+        "riskTolerance": "稳健型",
+        "investmentHorizon": "1–3 年",
+        "experienceLevel": "有基金投资经验"
+      },
+      "hotContext": null,
+      "evidence": [
+        {
+          "id": "index-x-week",
+          "entity": "演示指数 X",
+          "field": "周涨幅",
+          "expectedValue": 1.2,
+          "source": "DEMO 行情样例库",
+          "asOf": "2026-11-13T15:00:00+08:00",
+          "unit": "%",
+          "period": "2026-11-09 至 2026-11-13",
+          "actualValue": 1.2,
+          "actualAsOf": "2026-11-13T15:00:00+08:00",
+          "status": "match",
+          "precision": 2
+        }
+      ],
+      "claims": [
+        {
+          "evidenceId": "index-x-week",
+          "excerpt": "周涨幅为 1.20%",
+          "value": 1.2,
+          "asOf": "2026-11-13T15:00:00+08:00",
+          "citedSource": "DEMO 行情样例库"
+        }
+      ]
+    },
+    {
+      "id": "IE-012",
+      "answerId": "IE-012",
+      "intent": "基金问答",
+      "question": "演示基金 A 最近披露的单位净值是多少？",
+      "answer": "截至 2026 年 11 月 13 日，演示基金 A 的单位净值为 1.2800 元，来源为 DEMO 基金净值样例库。",
+      "modelVersion": "DEMO Agent 1.8",
+      "promptVersion": "DEMO Prompt v2.3",
+      "datasetVersion": "DEMO Eval Set v1.2",
+      "createdAt": "2026-11-16T14:42:00+08:00",
+      "profile": {
+        "id": "DEMO-KYC-02",
+        "riskTolerance": "稳健型",
+        "investmentHorizon": "1–3 年",
+        "experienceLevel": "有基金投资经验"
+      },
+      "hotContext": {
+        "title": "演示基金 A 披露周度净值",
+        "source": "DEMO 基金公告样例库",
+        "publishedAt": "2026-11-13T18:00:00+08:00",
+        "expiresAt": "2026-11-20T18:00:00+08:00",
+        "content": "模拟公告披露演示基金 A 2026 年 11 月 13 日的单位净值为 1.2500 元。"
+      },
+      "evidence": [
+        {
+          "id": "fund-a-nav",
+          "entity": "演示基金 A",
+          "field": "单位净值",
+          "expectedValue": 1.25,
+          "source": "DEMO 基金净值样例库",
+          "asOf": "2026-11-13T18:00:00+08:00",
+          "unit": "元",
+          "actualValue": 1.28,
+          "actualAsOf": "2026-11-13T18:00:00+08:00",
+          "status": "mismatch",
+          "precision": 4
+        }
+      ],
+      "claims": [
+        {
+          "evidenceId": "fund-a-nav",
+          "excerpt": "单位净值为 1.2800 元",
+          "value": 1.28,
+          "asOf": "2026-11-13T18:00:00+08:00",
+          "citedSource": "DEMO 基金净值样例库"
+        }
+      ]
+    },
+    {
+      "id": "IE-011",
+      "answerId": "IE-011",
+      "intent": "合规问答",
+      "question": "演示基金 B 未来会不会亏钱？",
+      "answer": "这种基金未来肯定不会亏损，持有就能保证收益。",
+      "modelVersion": "DEMO Agent 1.8",
+      "promptVersion": "DEMO Prompt v2.3",
+      "datasetVersion": "DEMO Eval Set v1.2",
+      "createdAt": "2026-11-16T14:36:00+08:00",
+      "profile": {
+        "id": "DEMO-KYC-01",
+        "riskTolerance": "保守型",
+        "investmentHorizon": "1 年以内",
+        "experienceLevel": "入门"
+      },
+      "hotContext": null,
+      "evidence": [
+        {
+          "id": "fund-b-loss",
+          "entity": "演示基金 B",
+          "field": "产品本金风险",
+          "expectedValue": "可能损失本金",
+          "source": "DEMO 产品说明样例库",
+          "asOf": "2026-11-12T10:00:00+08:00",
+          "actualValue": "肯定不会亏损",
+          "status": "mismatch"
+        }
+      ],
+      "claims": [
+        {
+          "evidenceId": "fund-b-loss",
+          "excerpt": "肯定不会亏损",
+          "value": "肯定不会亏损"
+        }
+      ]
+    },
+    {
+      "id": "IE-010",
+      "answerId": "IE-010",
+      "intent": "财务解释",
+      "question": "经营现金流和净利润有什么区别？",
+      "answer": "净利润按权责发生制确认，包含尚未收款的收入及非现金费用。经营现金流反映经营活动导致的现金收付，两者可能因应收账款或存货变化出现差异。",
+      "modelVersion": "DEMO Agent 1.8",
+      "promptVersion": "DEMO Prompt v2.3",
+      "datasetVersion": "DEMO Eval Set v1.2",
+      "createdAt": "2026-11-16T14:27:00+08:00",
+      "profile": {
+        "id": "DEMO-KYC-02",
+        "riskTolerance": "稳健型",
+        "investmentHorizon": "1–3 年",
+        "experienceLevel": "有基金投资经验"
+      },
+      "hotContext": null,
+      "evidence": [],
+      "claims": []
+    },
+    {
+      "id": "IE-009",
+      "answerId": "IE-009",
+      "intent": "行情问答",
+      "question": "演示指数 X 最近一个交易日收盘是多少？",
+      "answer": "DEMO 行情样例库记录，演示指数 X 最近一个交易日（2026 年 11 月 10 日）收于 2,410.20 点。",
+      "modelVersion": "DEMO Agent 1.8",
+      "promptVersion": "DEMO Prompt v2.3",
+      "datasetVersion": "DEMO Eval Set v1.2",
+      "createdAt": "2026-11-16T14:19:00+08:00",
+      "profile": {
+        "id": "DEMO-KYC-03",
+        "riskTolerance": "进取型",
+        "investmentHorizon": "3 年以上",
+        "experienceLevel": "有权益投资经验"
+      },
+      "hotContext": null,
+      "evidence": [
+        {
+          "id": "index-x-close",
+          "entity": "演示指数 X",
+          "field": "收盘点位",
+          "expectedValue": 2435.8,
+          "source": "DEMO 行情样例库",
+          "asOf": "2026-11-13T15:00:00+08:00",
+          "unit": "点",
+          "expiresAt": "2026-11-16T15:00:00+08:00",
+          "actualValue": 2410.2,
+          "actualAsOf": "2026-11-10T15:00:00+08:00",
+          "status": "stale",
+          "precision": 2
+        }
+      ],
+      "claims": [
+        {
+          "evidenceId": "index-x-close",
+          "excerpt": "2026 年 11 月 10 日）收于 2,410.20 点",
+          "value": 2410.2,
+          "asOf": "2026-11-10T15:00:00+08:00",
+          "citedSource": "DEMO 行情样例库"
+        }
+      ]
+    },
+    {
+      "id": "IE-008",
+      "answerId": "IE-008",
+      "intent": "个性化问答",
+      "question": "演示基金 B 的中等风险等级对我有什么实际含义？",
+      "answer": "DEMO 产品说明样例库将演示基金 B 标为中等风险。可以先关注两个问题：净值会波动多少，以及什么时候可能亏到本金。",
+      "modelVersion": "DEMO Agent 1.8",
+      "promptVersion": "DEMO Prompt v2.3",
+      "datasetVersion": "DEMO Eval Set v1.2",
+      "createdAt": "2026-11-16T14:08:00+08:00",
+      "profile": {
+        "id": "DEMO-KYC-01",
+        "riskTolerance": "保守型",
+        "investmentHorizon": "1 年以内",
+        "experienceLevel": "入门"
+      },
+      "hotContext": null,
+      "evidence": [
+        {
+          "id": "fund-b-risk",
+          "entity": "演示基金 B",
+          "field": "产品风险等级",
+          "expectedValue": "中等风险",
+          "source": "DEMO 产品说明样例库",
+          "asOf": "2026-11-12T10:00:00+08:00",
+          "actualValue": "中等风险",
+          "status": "match"
+        }
+      ],
+      "claims": [
+        {
+          "evidenceId": "fund-b-risk",
+          "excerpt": "中等风险",
+          "value": "中等风险",
+          "citedSource": "DEMO 产品说明样例库"
+        }
+      ]
+    },
+    {
+      "id": "IE-007",
+      "answerId": "IE-007",
+      "intent": "个性化问答",
+      "question": "演示基金 B 的风险等级是多少？我该怎么理解这个等级？",
+      "answer": "由于你的风险偏好偏保守，演示基金 B 是低风险产品，可以先了解它的赎回条件。",
+      "modelVersion": "DEMO Agent 1.8",
+      "promptVersion": "DEMO Prompt v2.3",
+      "datasetVersion": "DEMO Eval Set v1.2",
+      "createdAt": "2026-11-16T13:57:00+08:00",
+      "profile": {
+        "id": "DEMO-KYC-01",
+        "riskTolerance": "保守型",
+        "investmentHorizon": "1 年以内",
+        "experienceLevel": "入门"
+      },
+      "hotContext": null,
+      "evidence": [
+        {
+          "id": "fund-b-risk",
+          "entity": "演示基金 B",
+          "field": "产品风险等级",
+          "expectedValue": "中等风险",
+          "source": "DEMO 产品说明样例库",
+          "asOf": "2026-11-12T10:00:00+08:00",
+          "actualValue": "低风险",
+          "status": "mismatch"
+        }
+      ],
+      "claims": [
+        {
+          "evidenceId": "fund-b-risk",
+          "excerpt": "低风险产品",
+          "value": "低风险"
+        }
+      ]
+    },
+    {
+      "id": "IE-006",
+      "answerId": "IE-006",
+      "intent": "基金问答",
+      "question": "哪里可以查看演示基金 A 的赎回费用？",
+      "answer": "请查看演示基金 A 的产品资料概要或招募说明书中的赎回费率表，并留意份额类别和持有时长。",
+      "modelVersion": "DEMO Agent 1.8",
+      "promptVersion": "DEMO Prompt v2.3",
+      "datasetVersion": "DEMO Eval Set v1.2",
+      "createdAt": "2026-11-16T13:43:00+08:00",
+      "profile": {
+        "id": "DEMO-KYC-02",
+        "riskTolerance": "稳健型",
+        "investmentHorizon": "1–3 年",
+        "experienceLevel": "有基金投资经验"
+      },
+      "hotContext": null,
+      "evidence": [],
+      "claims": []
+    },
+    {
+      "id": "IE-005",
+      "answerId": "IE-005",
+      "intent": "合规问答",
+      "question": "解释一下基金费率。",
+      "answer": "样例账户编号 DEMO-ACCOUNT-39 的用户是保守型。基金常见的费用有管理费、托管费和申购、赎回费用。",
+      "modelVersion": "DEMO Agent 1.8",
+      "promptVersion": "DEMO Prompt v2.3",
+      "datasetVersion": "DEMO Eval Set v1.2",
+      "createdAt": "2026-11-16T13:32:00+08:00",
+      "profile": {
+        "id": "DEMO-KYC-01",
+        "riskTolerance": "保守型",
+        "investmentHorizon": "1 年以内",
+        "experienceLevel": "入门"
+      },
+      "hotContext": null,
+      "evidence": [],
+      "claims": []
+    },
+    {
+      "id": "IE-004",
+      "answerId": "IE-004",
+      "intent": "行情问答",
+      "question": "涨跌幅是与哪个价格比较的？",
+      "answer": "日涨跌幅通常以昨收为基准，用当前价格与昨收的差额除以昨收。特定品种或除权情形可能采用调整后的参考价。",
+      "modelVersion": "DEMO Agent 1.8",
+      "promptVersion": "DEMO Prompt v2.3",
+      "datasetVersion": "DEMO Eval Set v1.2",
+      "createdAt": "2026-11-16T13:20:00+08:00",
+      "profile": {
+        "id": "DEMO-KYC-03",
+        "riskTolerance": "进取型",
+        "investmentHorizon": "3 年以上",
+        "experienceLevel": "有权益投资经验"
+      },
+      "hotContext": null,
+      "evidence": [],
+      "claims": []
+    },
+    {
+      "id": "IE-003",
+      "answerId": "IE-003",
+      "intent": "财务解释",
+      "question": "毛利率下降可能有哪些原因？",
+      "answer": "毛利率可以从财务报表中的营业收入和营业成本计算出来。",
+      "relevanceCriteria": [
+        { "label": "指出毛利率下降的可能原因", "anyOf": ["售价下调", "成本上涨", "低毛利产品"] }
+      ],
+      "modelVersion": "DEMO Agent 1.8",
+      "promptVersion": "DEMO Prompt v2.3",
+      "datasetVersion": "DEMO Eval Set v1.2",
+      "createdAt": "2026-11-16T13:12:00+08:00",
+      "profile": {
+        "id": "DEMO-KYC-03",
+        "riskTolerance": "进取型",
+        "investmentHorizon": "3 年以上",
+        "experienceLevel": "有权益投资经验"
+      },
+      "hotContext": null,
+      "evidence": [],
+      "claims": []
+    },
+    {
+      "id": "IE-002",
+      "answerId": "IE-002",
+      "intent": "基金问答",
+      "question": "演示基金 A 在 11 月 13 日披露了什么数据？",
+      "answer": "DEMO 基金净值样例库记录，演示基金 A 在 2026 年 11 月 13 日的单位净值为 1.2500 元。",
+      "modelVersion": "DEMO Agent 1.8",
+      "promptVersion": "DEMO Prompt v2.3",
+      "datasetVersion": "DEMO Eval Set v1.2",
+      "createdAt": "2026-11-16T13:03:00+08:00",
+      "profile": {
+        "id": "DEMO-KYC-02",
+        "riskTolerance": "稳健型",
+        "investmentHorizon": "1–3 年",
+        "experienceLevel": "有基金投资经验"
+      },
+      "hotContext": null,
+      "evidence": [
+        {
+          "id": "fund-a-nav",
+          "entity": "演示基金 A",
+          "field": "单位净值",
+          "expectedValue": 1.25,
+          "source": "DEMO 基金净值样例库",
+          "asOf": "2026-11-13T18:00:00+08:00",
+          "unit": "元",
+          "actualValue": 1.25,
+          "actualAsOf": "2026-11-13T18:00:00+08:00",
+          "status": "match",
+          "precision": 4
+        }
+      ],
+      "claims": [
+        {
+          "evidenceId": "fund-a-nav",
+          "excerpt": "单位净值为 1.2500 元",
+          "value": 1.25,
+          "asOf": "2026-11-13T18:00:00+08:00",
+          "citedSource": "DEMO 基金净值样例库"
+        }
+      ]
+    },
+    {
+      "id": "IE-001",
+      "answerId": "IE-001",
+      "intent": "合规问答",
+      "question": "过去收益高，能说明基金未来收益也高吗？",
+      "answer": "历史收益仅反映特定区间的表现。未来结果受市场及产品策略影响，基金的净值会波动，也可能损失本金。",
+      "modelVersion": "DEMO Agent 1.8",
+      "promptVersion": "DEMO Prompt v2.3",
+      "datasetVersion": "DEMO Eval Set v1.2",
+      "createdAt": "2026-11-16T12:49:00+08:00",
+      "profile": {
+        "id": "DEMO-KYC-01",
+        "riskTolerance": "保守型",
+        "investmentHorizon": "1 年以内",
+        "experienceLevel": "入门"
+      },
+      "hotContext": null,
+      "evidence": [],
+      "claims": []
+    }
+  ],
+  "variants": [
+    {
+      "id": "IE-007",
+      "answerId": "IE-007-profile",
+      "intent": "个性化问答",
+      "question": "演示基金 B 的风险等级是多少？我该怎么理解这个等级？",
+      "answer": "DEMO 产品说明样例库列示产品等级为中等风险。可以进一步结合净值波动和赎回条件评估其与你的持有期限是否匹配。",
+      "modelVersion": "DEMO Agent 1.8",
+      "promptVersion": "DEMO Prompt v2.3",
+      "datasetVersion": "DEMO Eval Set v1.2",
+      "createdAt": "2026-11-16T13:57:00+08:00",
+      "profile": {
+        "id": "DEMO-KYC-03",
+        "riskTolerance": "进取型",
+        "investmentHorizon": "3 年以上",
+        "experienceLevel": "有权益投资经验"
+      },
+      "hotContext": null,
+      "evidence": [
+        {
+          "id": "fund-b-risk",
+          "entity": "演示基金 B",
+          "field": "产品风险等级",
+          "expectedValue": "中等风险",
+          "source": "DEMO 产品说明样例库",
+          "asOf": "2026-11-12T10:00:00+08:00",
+          "actualValue": "中等风险",
+          "status": "match"
+        }
+      ],
+      "claims": [
+        {
+          "evidenceId": "fund-b-risk",
+          "excerpt": "中等风险",
+          "value": "中等风险",
+          "citedSource": "DEMO 产品说明样例库"
+        }
+      ]
+    },
+    {
+      "id": "IE-008",
+      "answerId": "IE-008-profile",
+      "intent": "个性化问答",
+      "question": "演示基金 B 的中等风险等级对我有什么实际含义？",
+      "answer": "DEMO 产品说明样例库给出的评级为中等风险。可结合历史波动、回撤和资产配置评估风险暴露，并关注赎回安排。",
+      "modelVersion": "DEMO Agent 1.8",
+      "promptVersion": "DEMO Prompt v2.3",
+      "datasetVersion": "DEMO Eval Set v1.2",
+      "createdAt": "2026-11-16T14:08:00+08:00",
+      "profile": {
+        "id": "DEMO-KYC-03",
+        "riskTolerance": "进取型",
+        "investmentHorizon": "3 年以上",
+        "experienceLevel": "有权益投资经验"
+      },
+      "hotContext": null,
+      "evidence": [
+        {
+          "id": "fund-b-risk",
+          "entity": "演示基金 B",
+          "field": "产品风险等级",
+          "expectedValue": "中等风险",
+          "source": "DEMO 产品说明样例库",
+          "asOf": "2026-11-12T10:00:00+08:00",
+          "actualValue": "中等风险",
+          "status": "match"
+        }
+      ],
+      "claims": [
+        {
+          "evidenceId": "fund-b-risk",
+          "excerpt": "中等风险",
+          "value": "中等风险",
+          "citedSource": "DEMO 产品说明样例库"
+        }
+      ]
+    },
+    {
+      "id": "IE-020",
+      "answerId": "IE-020-profile",
+      "intent": "个性化问答",
+      "question": "演示企业 Y 当季经营现金流净额是多少？怎么理解这个数字？",
+      "answer": "据 DEMO 财报样例库，演示企业 Y 2026 年第三季度的经营活动现金流量净额为 1.20 亿元。可进一步检查应收账款和存货变动，判断现金流是否受营运资金变化影响。",
+      "relevanceCriteria": [
+        { "label": "回应经营现金流净额", "anyOf": ["经营活动现金流量净额", "经营现金流净额"] },
+        { "label": "解释经营现金流净额", "anyOf": ["收到的现金比付出的多", "经营活动现金流入减去流出"] }
+      ],
+      "modelVersion": "DEMO Agent 1.8",
+      "promptVersion": "DEMO Prompt v2.3",
+      "datasetVersion": "DEMO Eval Set v1.2",
+      "createdAt": "2026-11-16T14:50:00+08:00",
+      "profile": {
+        "id": "DEMO-KYC-03",
+        "riskTolerance": "进取型",
+        "investmentHorizon": "3 年以上",
+        "experienceLevel": "有权益投资经验"
+      },
+      "hotContext": null,
+      "evidence": [
+        {
+          "id": "issuer-y-operating-cash",
+          "entity": "演示企业 Y",
+          "field": "经营活动现金流量净额",
+          "expectedValue": 1.2,
+          "source": "DEMO 财报样例库",
+          "asOf": "2026-10-30T18:00:00+08:00",
+          "unit": "亿元",
+          "period": "2026 年第三季度",
+          "actualValue": 1.2,
+          "actualAsOf": "2026-10-30T18:00:00+08:00",
+          "status": "match",
+          "precision": 2
+        }
+      ],
+      "claims": [
+        {
+          "evidenceId": "issuer-y-operating-cash",
+          "excerpt": "经营活动现金流量净额为 1.20 亿元",
+          "value": 1.2,
+          "asOf": "2026-10-30T18:00:00+08:00",
+          "citedSource": "DEMO 财报样例库"
+        }
+      ]
+    },
+    {
+      "id": "IE-021",
+      "answerId": "IE-021-profile",
+      "intent": "个性化问答",
+      "question": "演示基金 B 在 2026 年 10 月的最大回撤是多少？",
+      "answer": "据 DEMO 基金净值样例库，演示基金 B 在 2026 年 10 月的最大回撤为 8%，表示该区间内从先前局部高点到随后低点的最大跌幅。",
+      "modelVersion": "DEMO Agent 1.8",
+      "promptVersion": "DEMO Prompt v2.3",
+      "datasetVersion": "DEMO Eval Set v1.2",
+      "createdAt": "2026-11-16T14:51:00+08:00",
+      "profile": {
+        "id": "DEMO-KYC-03",
+        "riskTolerance": "进取型",
+        "investmentHorizon": "3 年以上",
+        "experienceLevel": "有权益投资经验"
+      },
+      "hotContext": null,
+      "evidence": [
+        {
+          "id": "fund-b-max-drawdown",
+          "entity": "演示基金 B",
+          "field": "最大回撤",
+          "expectedValue": 8,
+          "source": "DEMO 基金净值样例库",
+          "asOf": "2026-10-30T20:00:00+08:00",
+          "unit": "%",
+          "period": "2026 年 10 月",
+          "actualValue": 8,
+          "actualAsOf": "2026-10-30T20:00:00+08:00",
+          "status": "match",
+          "precision": 2
+        }
+      ],
+      "claims": [
+        {
+          "evidenceId": "fund-b-max-drawdown",
+          "excerpt": "最大回撤为 8%",
+          "value": 8,
+          "asOf": "2026-10-30T20:00:00+08:00",
+          "citedSource": "DEMO 基金净值样例库"
+        }
+      ]
+    },
+    {
+      "id": "IE-003",
+      "answerId": "IE-003-model",
+      "intent": "财务解释",
+      "question": "毛利率下降可能有哪些原因？",
+      "answer": "毛利率下降可能来自售价下调、原材料成本上涨，或低毛利产品的销售占比上升。可结合财报中的价格、成本和产品收入结构排查。",
+      "relevanceCriteria": [
+        { "label": "指出毛利率下降的可能原因", "anyOf": ["售价下调", "成本上涨", "低毛利产品"] }
+      ],
+      "modelVersion": "DEMO Agent 1.9",
+      "promptVersion": "DEMO Prompt v2.3",
+      "datasetVersion": "DEMO Eval Set v1.2",
+      "createdAt": "2026-11-16T13:12:00+08:00",
+      "profile": {
+        "id": "DEMO-KYC-03",
+        "riskTolerance": "进取型",
+        "investmentHorizon": "3 年以上",
+        "experienceLevel": "有权益投资经验"
+      },
+      "hotContext": null,
+      "evidence": [],
+      "claims": []
+    },
+    {
+      "id": "IE-007",
+      "answerId": "IE-007-model",
+      "intent": "个性化问答",
+      "question": "演示基金 B 的风险等级是多少？我该怎么理解这个等级？",
+      "answer": "据 DEMO 产品说明样例库，演示基金 B 属于中等风险。可以先了解净值会怎样波动，以及急用钱时如何赎回。",
+      "modelVersion": "DEMO Agent 1.9",
+      "promptVersion": "DEMO Prompt v2.3",
+      "datasetVersion": "DEMO Eval Set v1.2",
+      "createdAt": "2026-11-16T13:57:00+08:00",
+      "profile": {
+        "id": "DEMO-KYC-01",
+        "riskTolerance": "保守型",
+        "investmentHorizon": "1 年以内",
+        "experienceLevel": "入门"
+      },
+      "hotContext": null,
+      "evidence": [
+        {
+          "id": "fund-b-risk",
+          "entity": "演示基金 B",
+          "field": "产品风险等级",
+          "expectedValue": "中等风险",
+          "source": "DEMO 产品说明样例库",
+          "asOf": "2026-11-12T10:00:00+08:00",
+          "actualValue": "中等风险",
+          "status": "match"
+        }
+      ],
+      "claims": [
+        {
+          "evidenceId": "fund-b-risk",
+          "excerpt": "中等风险",
+          "value": "中等风险",
+          "citedSource": "DEMO 产品说明样例库"
+        }
+      ]
+    },
+    {
+      "id": "IE-011",
+      "answerId": "IE-011-model",
+      "intent": "合规问答",
+      "question": "演示基金 B 未来会不会亏钱？",
+      "answer": "DEMO 产品说明样例库提示演示基金 B 可能损失本金。基金净值会波动，未来结果取决于市场变化和投资标的表现。",
+      "modelVersion": "DEMO Agent 1.9",
+      "promptVersion": "DEMO Prompt v2.3",
+      "datasetVersion": "DEMO Eval Set v1.2",
+      "createdAt": "2026-11-16T14:36:00+08:00",
+      "profile": {
+        "id": "DEMO-KYC-01",
+        "riskTolerance": "保守型",
+        "investmentHorizon": "1 年以内",
+        "experienceLevel": "入门"
+      },
+      "hotContext": null,
+      "evidence": [
+        {
+          "id": "fund-b-loss",
+          "entity": "演示基金 B",
+          "field": "产品本金风险",
+          "expectedValue": "可能损失本金",
+          "source": "DEMO 产品说明样例库",
+          "asOf": "2026-11-12T10:00:00+08:00",
+          "actualValue": "可能损失本金",
+          "status": "match"
+        }
+      ],
+      "claims": [
+        {
+          "evidenceId": "fund-b-loss",
+          "excerpt": "可能损失本金",
+          "value": "可能损失本金",
+          "citedSource": "DEMO 产品说明样例库"
+        }
+      ]
+    },
+    {
+      "id": "IE-012",
+      "answerId": "IE-012-model",
+      "intent": "基金问答",
+      "question": "演示基金 A 最近披露的单位净值是多少？",
+      "answer": "截至 2026 年 11 月 13 日，演示基金 A 的单位净值为 1.2500 元，来源为 DEMO 基金净值样例库。",
+      "modelVersion": "DEMO Agent 1.9",
+      "promptVersion": "DEMO Prompt v2.3",
+      "datasetVersion": "DEMO Eval Set v1.2",
+      "createdAt": "2026-11-16T14:42:00+08:00",
+      "profile": {
+        "id": "DEMO-KYC-02",
+        "riskTolerance": "稳健型",
+        "investmentHorizon": "1–3 年",
+        "experienceLevel": "有基金投资经验"
+      },
+      "hotContext": {
+        "title": "演示基金 A 披露周度净值",
+        "source": "DEMO 基金公告样例库",
+        "publishedAt": "2026-11-13T18:00:00+08:00",
+        "expiresAt": "2026-11-20T18:00:00+08:00",
+        "content": "模拟公告披露演示基金 A 2026 年 11 月 13 日的单位净值为 1.2500 元。"
+      },
+      "evidence": [
+        {
+          "id": "fund-a-nav",
+          "entity": "演示基金 A",
+          "field": "单位净值",
+          "expectedValue": 1.25,
+          "source": "DEMO 基金净值样例库",
+          "asOf": "2026-11-13T18:00:00+08:00",
+          "unit": "元",
+          "actualValue": 1.25,
+          "actualAsOf": "2026-11-13T18:00:00+08:00",
+          "status": "match",
+          "precision": 4
+        }
+      ],
+      "claims": [
+        {
+          "evidenceId": "fund-a-nav",
+          "excerpt": "单位净值为 1.2500 元",
+          "value": 1.25,
+          "asOf": "2026-11-13T18:00:00+08:00",
+          "citedSource": "DEMO 基金净值样例库"
+        }
+      ]
+    },
+    {
+      "id": "IE-005",
+      "answerId": "IE-005-prompt",
+      "intent": "合规问答",
+      "question": "解释一下基金费率。",
+      "answer": "基金常见费用包括管理费、托管费和申购、赎回费用。具体费率可查看产品资料概要，并核对份额类别和持有期限。",
+      "modelVersion": "DEMO Agent 1.8",
+      "promptVersion": "DEMO Prompt v2.4",
+      "datasetVersion": "DEMO Eval Set v1.2",
+      "createdAt": "2026-11-16T13:32:00+08:00",
+      "profile": {
+        "id": "DEMO-KYC-01",
+        "riskTolerance": "保守型",
+        "investmentHorizon": "1 年以内",
+        "experienceLevel": "入门"
+      },
+      "hotContext": null,
+      "evidence": [],
+      "claims": []
+    },
+    {
+      "id": "IE-009",
+      "answerId": "IE-009-prompt",
+      "intent": "行情问答",
+      "question": "演示指数 X 最近一个交易日收盘是多少？",
+      "answer": "截至回答时间，演示指数 X 最近一个已收盘交易日是 2026 年 11 月 13 日，收于 2,435.80 点。来源为 DEMO 行情样例库。",
+      "modelVersion": "DEMO Agent 1.8",
+      "promptVersion": "DEMO Prompt v2.4",
+      "datasetVersion": "DEMO Eval Set v1.2",
+      "createdAt": "2026-11-16T14:19:00+08:00",
+      "profile": {
+        "id": "DEMO-KYC-03",
+        "riskTolerance": "进取型",
+        "investmentHorizon": "3 年以上",
+        "experienceLevel": "有权益投资经验"
+      },
+      "hotContext": null,
+      "evidence": [
+        {
+          "id": "index-x-close",
+          "entity": "演示指数 X",
+          "field": "收盘点位",
+          "expectedValue": 2435.8,
+          "source": "DEMO 行情样例库",
+          "asOf": "2026-11-13T15:00:00+08:00",
+          "unit": "点",
+          "expiresAt": "2026-11-16T15:00:00+08:00",
+          "actualValue": 2435.8,
+          "actualAsOf": "2026-11-13T15:00:00+08:00",
+          "status": "match",
+          "precision": 2
+        }
+      ],
+      "claims": [
+        {
+          "evidenceId": "index-x-close",
+          "excerpt": "收于 2,435.80 点",
+          "value": 2435.8,
+          "asOf": "2026-11-13T15:00:00+08:00",
+          "citedSource": "DEMO 行情样例库"
+        }
+      ]
+    },
+    {
+      "id": "IE-017",
+      "answerId": "IE-017-prompt",
+      "intent": "基金问答",
+      "question": "演示基金 A 在 11 月 13 日的单位净值是多少？请注明来源。",
+      "answer": "据 DEMO 基金净值样例库，2026 年 11 月 13 日演示基金 A 的单位净值为 1.2500 元。",
+      "modelVersion": "DEMO Agent 1.8",
+      "promptVersion": "DEMO Prompt v2.4",
+      "datasetVersion": "DEMO Eval Set v1.2",
+      "createdAt": "2026-11-16T14:47:00+08:00",
+      "profile": {
+        "id": "DEMO-KYC-02",
+        "riskTolerance": "稳健型",
+        "investmentHorizon": "1–3 年",
+        "experienceLevel": "有基金投资经验"
+      },
+      "hotContext": null,
+      "evidence": [
+        {
+          "id": "fund-a-nav",
+          "entity": "演示基金 A",
+          "field": "单位净值",
+          "expectedValue": 1.25,
+          "source": "DEMO 基金净值样例库",
+          "asOf": "2026-11-13T18:00:00+08:00",
+          "unit": "元",
+          "actualValue": 1.25,
+          "actualAsOf": "2026-11-13T18:00:00+08:00",
+          "status": "match",
+          "precision": 4
+        }
+      ],
+      "claims": [
+        {
+          "evidenceId": "fund-a-nav",
+          "excerpt": "单位净值为 1.2500 元",
+          "value": 1.25,
+          "asOf": "2026-11-13T18:00:00+08:00",
+          "citedSource": "DEMO 基金净值样例库"
+        }
+      ]
+    },
+    {
+      "id": "IE-024",
+      "answerId": "IE-024-prompt",
+      "intent": "合规问答",
+      "question": "我需要留一笔应急资金，还可以把它全部买入演示基金 B 吗？",
+      "answer": "应急资金通常需要随时可用。演示基金 B 的中等风险意味着净值可能波动，赎回也可能有到账等待时间。可以先核对产品说明中的流动性安排和本金风险。来源为 DEMO 产品说明样例库。",
+      "riskDisclosureRequired": true,
+      "modelVersion": "DEMO Agent 1.8",
+      "promptVersion": "DEMO Prompt v2.4",
+      "datasetVersion": "DEMO Eval Set v1.2",
+      "createdAt": "2026-11-16T14:54:00+08:00",
+      "profile": {
+        "id": "DEMO-KYC-03",
+        "riskTolerance": "进取型",
+        "investmentHorizon": "3 年以上",
+        "experienceLevel": "有权益投资经验"
+      },
+      "hotContext": null,
+      "evidence": [
+        {
+          "id": "fund-b-risk",
+          "entity": "演示基金 B",
+          "field": "产品风险等级",
+          "expectedValue": "中等风险",
+          "source": "DEMO 产品说明样例库",
+          "asOf": "2026-11-12T10:00:00+08:00",
+          "actualValue": "中等风险",
+          "status": "match"
+        }
+      ],
+      "claims": [
+        {
+          "evidenceId": "fund-b-risk",
+          "excerpt": "中等风险",
+          "value": "中等风险",
+          "citedSource": "DEMO 产品说明样例库"
+        }
+      ]
+    },
+    {
+      "id": "IE-009",
+      "answerId": "IE-009-dataset",
+      "intent": "行情问答",
+      "question": "演示指数 X 最近一个交易日收盘是多少？",
+      "answer": "DEMO 行情样例库记录，演示指数 X 最近一个交易日（2026 年 11 月 10 日）收于 2,410.20 点。",
+      "modelVersion": "DEMO Agent 1.8",
+      "promptVersion": "DEMO Prompt v2.3",
+      "datasetVersion": "DEMO Eval Set v1.3",
+      "createdAt": "2026-11-16T14:19:00+08:00",
+      "profile": {
+        "id": "DEMO-KYC-03",
+        "riskTolerance": "进取型",
+        "investmentHorizon": "3 年以上",
+        "experienceLevel": "有权益投资经验"
+      },
+      "hotContext": null,
+      "evidence": [
+        {
+          "id": "index-x-close",
+          "entity": "演示指数 X",
+          "field": "收盘点位",
+          "expectedValue": 2435.8,
+          "source": "DEMO 行情样例库",
+          "asOf": "2026-11-13T15:00:00+08:00",
+          "unit": "点",
+          "expiresAt": "2026-11-16T15:00:00+08:00",
+          "actualValue": 2410.2,
+          "actualAsOf": "2026-11-10T15:00:00+08:00",
+          "status": "stale",
+          "precision": 2
+        },
+        {
+          "id": "index-x-archived-close",
+          "entity": "演示指数 X",
+          "field": "归档收盘点位",
+          "expectedValue": 2410.2,
+          "source": "DEMO 行情样例库",
+          "asOf": "2026-11-10T15:00:00+08:00",
+          "unit": "点",
+          "actualValue": 2410.2,
+          "actualAsOf": "2026-11-10T15:00:00+08:00",
+          "status": "match",
+          "precision": 2
+        }
+      ],
+      "claims": [
+        {
+          "evidenceId": "index-x-close",
+          "excerpt": "2026 年 11 月 10 日）收于 2,410.20 点",
+          "value": 2410.2,
+          "asOf": "2026-11-10T15:00:00+08:00",
+          "citedSource": "DEMO 行情样例库"
+        },
+        {
+          "evidenceId": "index-x-archived-close",
+          "excerpt": "收于 2,410.20 点",
+          "value": 2410.2,
+          "asOf": "2026-11-10T15:00:00+08:00",
+          "citedSource": "DEMO 行情样例库"
+        }
+      ]
+    },
+    {
+      "id": "IE-012",
+      "answerId": "IE-012-dataset",
+      "intent": "基金问答",
+      "question": "演示基金 A 最近披露的单位净值是多少？",
+      "answer": "截至 2026 年 11 月 13 日，演示基金 A 的单位净值为 1.2800 元，来源为 DEMO 基金净值样例库。",
+      "modelVersion": "DEMO Agent 1.8",
+      "promptVersion": "DEMO Prompt v2.3",
+      "datasetVersion": "DEMO Eval Set v1.3",
+      "createdAt": "2026-11-16T14:42:00+08:00",
+      "profile": {
+        "id": "DEMO-KYC-02",
+        "riskTolerance": "稳健型",
+        "investmentHorizon": "1–3 年",
+        "experienceLevel": "有基金投资经验"
+      },
+      "hotContext": {
+        "title": "演示基金 A 披露周度净值",
+        "source": "DEMO 基金公告样例库",
+        "publishedAt": "2026-11-13T18:00:00+08:00",
+        "expiresAt": "2026-11-20T18:00:00+08:00",
+        "content": "模拟公告披露演示基金 A 2026 年 11 月 13 日的单位净值为 1.2500 元。"
+      },
+      "evidence": [
+        {
+          "id": "fund-a-nav",
+          "entity": "演示基金 A",
+          "field": "单位净值",
+          "expectedValue": 1.25,
+          "source": "DEMO 基金净值样例库",
+          "asOf": "2026-11-13T18:00:00+08:00",
+          "unit": "元",
+          "actualValue": 1.28,
+          "actualAsOf": "2026-11-13T18:00:00+08:00",
+          "status": "mismatch",
+          "precision": 4
+        },
+        {
+          "id": "fund-a-nav-precision",
+          "entity": "演示基金 A",
+          "field": "净值披露小数位数",
+          "expectedValue": 4,
+          "source": "DEMO 基金公告样例库",
+          "asOf": "2026-11-13T18:00:00+08:00",
+          "unit": "位",
+          "actualValue": 4,
+          "actualAsOf": "2026-11-13T18:00:00+08:00",
+          "status": "match"
+        }
+      ],
+      "claims": [
+        {
+          "evidenceId": "fund-a-nav",
+          "excerpt": "单位净值为 1.2800 元",
+          "value": 1.28,
+          "asOf": "2026-11-13T18:00:00+08:00",
+          "citedSource": "DEMO 基金净值样例库"
+        },
+        {
+          "evidenceId": "fund-a-nav-precision",
+          "excerpt": "1.2800 元",
+          "value": 4,
+          "asOf": "2026-11-13T18:00:00+08:00"
+        }
+      ]
+    }
+  ],
+  "profilePairs": [
+    {
+      "caseId": "IE-007",
+      "answerIds": [
+        "IE-007",
+        "IE-007-profile"
+      ],
+      "invariantEvidenceIds": [
+        "fund-b-risk"
+      ]
+    },
+    {
+      "caseId": "IE-008",
+      "answerIds": [
+        "IE-008",
+        "IE-008-profile"
+      ],
+      "invariantEvidenceIds": [
+        "fund-b-risk"
+      ]
+    },
+    {
+      "caseId": "IE-020",
+      "answerIds": [
+        "IE-020",
+        "IE-020-profile"
+      ],
+      "invariantEvidenceIds": [
+        "issuer-y-operating-cash"
+      ]
+    },
+    {
+      "caseId": "IE-021",
+      "answerIds": [
+        "IE-021",
+        "IE-021-profile"
+      ],
+      "invariantEvidenceIds": [
+        "fund-b-max-drawdown"
+      ]
+    }
+  ]
+}
