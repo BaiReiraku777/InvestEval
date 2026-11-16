@@ -1,5 +1,7 @@
 # InvestEval · 投资 Agent 回答质量评测平台
 
+[打开线上演示](https://invest-eval.vercel.app) · [查看测试与验收记录](docs/TESTING.md)
+
 投资 Agent 的回答可能遗漏问题要点、引用错误或过期的金融数据，也可能因用户画像而改变客观事实。InvestEval 帮助投资产品经理、模型与 Prompt 开发者、质量及合规复核人员发现、定位和比较这些问题。平台不生成投资建议，也不执行交易。
 
 ## 核心功能

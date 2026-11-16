@@ -23,6 +23,8 @@
 
 额外注入损坏的工作区数据时，原版本把非数组证据引用传给 `join`，导致详情页崩溃。修复后浏览器重跑通过：丢弃无效评测、复核及反馈记录，其余有效工作区仍能加载。模拟存储配额耗尽时，页面明确提示仅在本次会话保留，刷新后不误显示已保存的反馈。
 
+Vercel 生产域名 [invest-eval.vercel.app](https://invest-eval.vercel.app) 在无登录凭据的 HTTP 请求下通过冒烟检查：总览、评测中心、`IE-012` 详情和版本对比返回 200；批量接口实际返回 5 条规则结果，正常样例为 100 分，分别识别数值错误、个性化失真、高风险合规与隐私问题。线上未配置云端 Judge，整条运行标为不完整并保留规则结果。Vercel 安装期间存在 ESLint 间接插件 peer 版本警告，构建仍成功。
+
 运行复验：`npm test`、`npm run lint`、`npm run typecheck`、`npm run build`、`npm run test:judge`。浏览器操作按上表重复，存储项名为 `investeval:workspace:v1`。本次未覆盖 Safari、Firefox、多设备同步或真实金融数据，也未用云端 LLM；下面的真实模型结果为前一阶段记录。
 
 ## 前期规则、协议与浏览器记录
@@ -62,7 +64,7 @@ npm run typecheck
 
 ## 生产服务冒烟验证
 
-构建后运行 `npm run start`，使用 `POST /api/evaluate` 和 JSON 请求体 `{"answerId":"IE-020"}`。响应中 `result.source` 为 `run`，`executionStatus` 为 `complete`，`totalScore` 为 100。按表中 ID 发送请求可复现六类归因。
+构建后运行 `npm run start`，使用 `POST /api/evaluate` 和 JSON 请求体 `{"answerId":"IE-020"}`。响应中 `result.source` 为 `run`，`result.executionStatus` 为 `complete`，`result.totalScore` 为 100。未配置 Judge 时，响应顶层 `executionStatus` 为 `incomplete`。按表中 ID 发送请求可复现六类归因。
 
 规则阶段的生产 HTTP 验证覆盖总览、问答评测中心、版本对比和 38 个回答详情，共 41 个成功页面。无效详情和未知回答 ID 返回 404。无效 JSON、缺少字段、类型错误返回 400，GET 评测接口返回 405。
 
