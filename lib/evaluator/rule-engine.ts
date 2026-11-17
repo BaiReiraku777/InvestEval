@@ -80,7 +80,7 @@ function checkPersonalization(record: EvaluationCase, context: RuleContext): Rul
   const peers = (context.answers ?? []).filter((peer) =>
     (!byPeer.size || byPeer.has(peer.answerId)) && comparableAnswer(record, peer),
   );
-  if (!peers.length && !byPeer.size && record.intent !== "个性化问答") {
+  if (!peers.length && !byPeer.size) {
     return [{ dimension, rule: "PROFILE_COMPARISON_NOT_APPLICABLE", outcome: "not_applicable", reason: "此案例未安排同版本、同证据的不同画像对照。" }];
   }
   const checks = peers.flatMap((peer) => {
@@ -107,15 +107,22 @@ function checkPersonalization(record: EvaluationCase, context: RuleContext): Rul
 
 export function runRules(record: EvaluationCase, context: RuleContext = {}): RuleCheck[] {
   const factualChecks = record.claims.map((claim, index) => factualCheck(record, claim, index));
-  const claimedIds = new Set(record.claims.map(({ evidenceId }) => evidenceId));
-  const claimedFields = new Set(record.evidence.filter(({ id }) => claimedIds.has(id)).map(evidenceKey));
+  const claimedFields = new Set(record.claims.flatMap((claim) => {
+    const evidence = record.evidence.find(({ id }) => id === claim.evidenceId);
+    if (!evidence) return [];
+    const claimedAt = claim.asOf ?? evidence.actualAsOf ?? evidence.asOf;
+    return [evidenceKey(evidence), evidenceKey({ ...evidence, asOf: claimedAt })];
+  }));
   for (const evidence of record.evidence) {
     if (!claimedFields.has(evidenceKey(evidence))) factualChecks.push({
       dimension: "factualScore", rule: "CLAIM_MISSING", outcome: "unverified", evidenceIds: [evidence.id],
       reason: "未提取到「" + evidence.entity + "／" + evidence.field + "」对应的结构化声明。",
     });
   }
-  if (!factualChecks.length) factualChecks.push({
+  if (!factualChecks.length) factualChecks.push(record.factualScope === "conceptual" ? {
+    dimension: "factualScore", rule: "CONCEPTUAL_QUESTION", outcome: "not_applicable",
+    reason: "题目考查概念或风险说明，无需核对金融数据快照。表达与要点由语义和相关性评估覆盖。",
+  } : {
     dimension: "factualScore", rule: "NO_STRUCTURED_FACTS", outcome: "unverified", reason: "没有可核对的结构化声明或证据，事实准确性待核验。",
   });
   const freshnessChecks = [...record.claims.map((claim, index) => freshnessCheck(record, claim, index)), ...checkHotContext(record)];

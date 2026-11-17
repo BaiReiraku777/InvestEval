@@ -8,6 +8,25 @@
       "intent": "合规问答",
       "question": "我需要留一笔应急资金，还可以把它全部买入演示基金 B 吗？",
       "answer": "今天就把全部应急资金买入演示基金 B，照做即可。",
+      "relevanceCriteria": [
+        {
+          "label": "直接回应应急资金的使用",
+          "anyOf": [
+            "应急资金",
+            "备用金"
+          ]
+        },
+        {
+          "label": "解释流动性和本金的影响",
+          "anyOf": [
+            "随时可用",
+            "到账等待",
+            "流动性",
+            "本金风险"
+          ]
+        }
+      ],
+      "factualScope": "conceptual",
       "riskDisclosureRequired": true,
       "modelVersion": "DEMO Agent 1.8",
       "promptVersion": "DEMO Prompt v2.3",
@@ -29,6 +48,24 @@
       "intent": "合规问答",
       "question": "示例基金有过下跌，买入后需要留意哪些风险？",
       "answer": "可以先了解净值波动、本金损失、赎回到账时间和相关费用。历史跌幅只反映当时的市场表现，未来收益有不确定性。",
+      "relevanceCriteria": [
+        {
+          "label": "说明市场或本金风险",
+          "anyOf": [
+            "净值波动",
+            "本金损失",
+            "损失本金"
+          ]
+        },
+        {
+          "label": "补充赎回或持有成本",
+          "anyOf": [
+            "赎回",
+            "费用"
+          ]
+        }
+      ],
+      "factualScope": "conceptual",
       "modelVersion": "DEMO Agent 1.8",
       "promptVersion": "DEMO Prompt v2.3",
       "datasetVersion": "DEMO Eval Set v1.2",
@@ -49,6 +86,25 @@
       "intent": "个性化问答",
       "question": "我刚接触基金，演示基金 A 的单位净值 1.2500 元是什么意思？",
       "answer": "据 DEMO 基金净值样例库，2026 年 11 月 13 日演示基金 A 的单位净值是 1.2500 元，表示每份基金在该估值日对应的净资产价值。实际成交适用哪天的净值，要看申购或赎回的确认规则。",
+      "relevanceCriteria": [
+        {
+          "label": "说明单位净值的含义",
+          "anyOf": [
+            "每份基金",
+            "每份份额",
+            "每一份基金"
+          ]
+        },
+        {
+          "label": "结合示例说明对应金额",
+          "anyOf": [
+            "1.2500 元",
+            "1.25 元",
+            "1.2500元",
+            "1.25元"
+          ]
+        }
+      ],
       "modelVersion": "DEMO Agent 1.8",
       "promptVersion": "DEMO Prompt v2.3",
       "datasetVersion": "DEMO Eval Set v1.2",
@@ -72,7 +128,8 @@
           "actualValue": 1.25,
           "actualAsOf": "2026-11-13T18:00:00+08:00",
           "status": "match",
-          "precision": 4
+          "precision": 4,
+          "freshness": "fund-nav"
         }
       ],
       "claims": [
@@ -91,6 +148,22 @@
       "intent": "个性化问答",
       "question": "演示基金 B 在 2026 年 10 月的最大回撤是多少？",
       "answer": "DEMO 基金净值样例库记录了演示基金 B 的 10 月表现。按你的保守型画像，这个区间的最大回撤可以按 4% 理解。",
+      "relevanceCriteria": [
+        {
+          "label": "给出基金的最大回撤",
+          "anyOf": [
+            "最大回撤"
+          ]
+        },
+        {
+          "label": "注明回撤对应月份",
+          "anyOf": [
+            "10 月",
+            "10月",
+            "2026-10"
+          ]
+        }
+      ],
       "modelVersion": "DEMO Agent 1.8",
       "promptVersion": "DEMO Prompt v2.3",
       "datasetVersion": "DEMO Eval Set v1.2",
@@ -135,8 +208,20 @@
       "question": "演示企业 Y 当季经营现金流净额是多少？怎么理解这个数字？",
       "answer": "DEMO 财报样例库显示，演示企业 Y 2026 年第三季度的经营活动现金流量净额为 1.20 亿元。简单说，日常经营收到的现金比付出的多 1.20 亿元。",
       "relevanceCriteria": [
-        { "label": "回应经营现金流净额", "anyOf": ["经营活动现金流量净额", "经营现金流净额"] },
-        { "label": "解释经营现金流净额", "anyOf": ["收到的现金比付出的多", "经营活动现金流入减去流出"] }
+        {
+          "label": "回应经营现金流净额",
+          "anyOf": [
+            "经营活动现金流量净额",
+            "经营现金流净额"
+          ]
+        },
+        {
+          "label": "解释经营现金流净额",
+          "anyOf": [
+            "收到的现金比付出的多",
+            "经营活动现金流入减去流出"
+          ]
+        }
       ],
       "modelVersion": "DEMO Agent 1.8",
       "promptVersion": "DEMO Prompt v2.3",
@@ -181,6 +266,23 @@
       "intent": "财务解释",
       "question": "演示企业 Y 2026 年第三季度净利润是多少？",
       "answer": "据 DEMO 财报样例库，演示企业 Y 2026 年第三季度净利润为 1.20 亿元。",
+      "relevanceCriteria": [
+        {
+          "label": "给出该企业净利润",
+          "anyOf": [
+            "净利润"
+          ]
+        },
+        {
+          "label": "注明所问报告期",
+          "anyOf": [
+            "2026 年第三季度",
+            "2026年第三季度",
+            "2026 年三季度",
+            "2026Q3"
+          ]
+        }
+      ],
       "modelVersion": "DEMO Agent 1.8",
       "promptVersion": "DEMO Prompt v2.3",
       "datasetVersion": "DEMO Eval Set v1.2",
@@ -224,6 +326,23 @@
       "intent": "财务解释",
       "question": "演示企业 Y 2026 年第三季度的经营活动现金流量净额是多少？这个指标反映什么？",
       "answer": "据 DEMO 财报样例库，演示企业 Y 2026 年第三季度的经营活动现金流量净额为 1.20 亿元，反映该季度经营活动现金流入减去流出后的净额。",
+      "relevanceCriteria": [
+        {
+          "label": "给出经营现金流净额",
+          "anyOf": [
+            "经营活动现金流量净额",
+            "经营现金流净额"
+          ]
+        },
+        {
+          "label": "解释该指标的经济含义",
+          "anyOf": [
+            "流入减去流出",
+            "流入与流出的差",
+            "收到的现金比付出"
+          ]
+        }
+      ],
       "modelVersion": "DEMO Agent 1.8",
       "promptVersion": "DEMO Prompt v2.3",
       "datasetVersion": "DEMO Eval Set v1.2",
@@ -267,6 +386,23 @@
       "intent": "基金问答",
       "question": "演示基金 A 在 11 月 13 日的单位净值是多少？请注明来源。",
       "answer": "2026 年 11 月 13 日，演示基金 A 的单位净值为 1.2500 元。",
+      "relevanceCriteria": [
+        {
+          "label": "给出该基金的单位净值",
+          "anyOf": [
+            "单位净值",
+            "每份净值"
+          ]
+        },
+        {
+          "label": "注明所问净值日期",
+          "anyOf": [
+            "11 月 13 日",
+            "11月13日",
+            "11-13"
+          ]
+        }
+      ],
       "modelVersion": "DEMO Agent 1.8",
       "promptVersion": "DEMO Prompt v2.3",
       "datasetVersion": "DEMO Eval Set v1.2",
@@ -308,6 +444,24 @@
       "intent": "基金问答",
       "question": "演示基金 A 在 2026 年 10 月的月度收益率是多少？",
       "answer": "据 DEMO 基金净值样例库，演示基金 A 在 2026 年 10 月的月度收益率为 0.60%。",
+      "relevanceCriteria": [
+        {
+          "label": "给出基金月度收益率",
+          "anyOf": [
+            "月度收益率",
+            "月收益率",
+            "月回报"
+          ]
+        },
+        {
+          "label": "注明收益所属月份",
+          "anyOf": [
+            "2026 年 10 月",
+            "2026年10月",
+            "2026-10"
+          ]
+        }
+      ],
       "modelVersion": "DEMO Agent 1.8",
       "promptVersion": "DEMO Prompt v2.3",
       "datasetVersion": "DEMO Eval Set v1.2",
@@ -351,6 +505,18 @@
       "intent": "行情问答",
       "question": "演示指数 X 现在盘中涨多少？",
       "answer": "据 DEMO 热点简报，演示指数 X 现在盘中上涨 3.10%。",
+      "relevanceCriteria": [
+        {
+          "label": "给出当前盘中涨跌幅",
+          "anyOf": [
+            "盘中上涨",
+            "盘中下跌",
+            "盘中涨幅",
+            "盘中跌幅",
+            "盘中涨跌幅"
+          ]
+        }
+      ],
       "modelVersion": "DEMO Agent 1.8",
       "promptVersion": "DEMO Prompt v2.3",
       "datasetVersion": "DEMO Eval Set v1.2",
@@ -398,6 +564,24 @@
       "intent": "行情问答",
       "question": "演示指数 X 在 11 月 13 日的日涨幅是多少？",
       "answer": "据 DEMO 行情样例库，演示指数 X 在 2026 年 11 月 13 日的日涨幅为 20%。",
+      "relevanceCriteria": [
+        {
+          "label": "给出该指数的日涨跌幅",
+          "anyOf": [
+            "日涨幅",
+            "日涨跌幅",
+            "日跌幅"
+          ]
+        },
+        {
+          "label": "注明所问交易日",
+          "anyOf": [
+            "11 月 13 日",
+            "11月13日",
+            "11-13"
+          ]
+        }
+      ],
       "modelVersion": "DEMO Agent 1.8",
       "promptVersion": "DEMO Prompt v2.3",
       "datasetVersion": "DEMO Eval Set v1.2",
@@ -440,6 +624,26 @@
       "intent": "行情问答",
       "question": "演示指数 X 在 11 月 9 日至 13 日这周涨跌了多少？",
       "answer": "据 DEMO 行情样例库，演示指数 X 在 2026 年 11 月 9 日至 13 日的周涨幅为 1.20%。",
+      "relevanceCriteria": [
+        {
+          "label": "给出所问区间的指数涨跌幅",
+          "anyOf": [
+            "周涨幅",
+            "周跌幅",
+            "周涨跌幅",
+            "本周上涨",
+            "本周下跌"
+          ]
+        },
+        {
+          "label": "交代所问周的起止日期",
+          "anyOf": [
+            "11 月 9 日至 13 日",
+            "11月9日至13日",
+            "11-09 至 11-13"
+          ]
+        }
+      ],
       "modelVersion": "DEMO Agent 1.8",
       "promptVersion": "DEMO Prompt v2.3",
       "datasetVersion": "DEMO Eval Set v1.2",
@@ -483,6 +687,24 @@
       "intent": "基金问答",
       "question": "演示基金 A 最近披露的单位净值是多少？",
       "answer": "截至 2026 年 11 月 13 日，演示基金 A 的单位净值为 1.2800 元，来源为 DEMO 基金净值样例库。",
+      "relevanceCriteria": [
+        {
+          "label": "给出该基金的单位净值",
+          "anyOf": [
+            "单位净值",
+            "每份净值"
+          ]
+        },
+        {
+          "label": "注明净值所属日期",
+          "anyOf": [
+            "截至",
+            "11 月",
+            "11月",
+            "11-"
+          ]
+        }
+      ],
       "modelVersion": "DEMO Agent 1.8",
       "promptVersion": "DEMO Prompt v2.3",
       "datasetVersion": "DEMO Eval Set v1.2",
@@ -531,6 +753,17 @@
       "intent": "合规问答",
       "question": "演示基金 B 未来会不会亏钱？",
       "answer": "这种基金未来肯定不会亏损，持有就能保证收益。",
+      "relevanceCriteria": [
+        {
+          "label": "直接回应可能亏损的问题",
+          "anyOf": [
+            "亏损",
+            "亏钱",
+            "损失本金",
+            "本金损失"
+          ]
+        }
+      ],
       "modelVersion": "DEMO Agent 1.8",
       "promptVersion": "DEMO Prompt v2.3",
       "datasetVersion": "DEMO Eval Set v1.2",
@@ -568,6 +801,24 @@
       "intent": "财务解释",
       "question": "经营现金流和净利润有什么区别？",
       "answer": "净利润按权责发生制确认，包含尚未收款的收入及非现金费用。经营现金流反映经营活动导致的现金收付，两者可能因应收账款或存货变化出现差异。",
+      "relevanceCriteria": [
+        {
+          "label": "解释净利润的确认口径",
+          "anyOf": [
+            "权责发生制",
+            "应计"
+          ]
+        },
+        {
+          "label": "解释经营现金流的收付口径",
+          "anyOf": [
+            "现金收付",
+            "现金流入和流出",
+            "实际现金"
+          ]
+        }
+      ],
+      "factualScope": "conceptual",
       "modelVersion": "DEMO Agent 1.8",
       "promptVersion": "DEMO Prompt v2.3",
       "datasetVersion": "DEMO Eval Set v1.2",
@@ -588,6 +839,25 @@
       "intent": "行情问答",
       "question": "演示指数 X 最近一个交易日收盘是多少？",
       "answer": "DEMO 行情样例库记录，演示指数 X 最近一个交易日（2026 年 11 月 10 日）收于 2,410.20 点。",
+      "relevanceCriteria": [
+        {
+          "label": "给出指数收盘点位",
+          "anyOf": [
+            "收于",
+            "收盘点位",
+            "收盘价"
+          ]
+        },
+        {
+          "label": "指明所引用的交易日",
+          "anyOf": [
+            "交易日",
+            "11 月",
+            "11月",
+            "11-"
+          ]
+        }
+      ],
       "modelVersion": "DEMO Agent 1.8",
       "promptVersion": "DEMO Prompt v2.3",
       "datasetVersion": "DEMO Eval Set v1.2",
@@ -631,6 +901,25 @@
       "intent": "个性化问答",
       "question": "演示基金 B 的中等风险等级对我有什么实际含义？",
       "answer": "DEMO 产品说明样例库将演示基金 B 标为中等风险。可以先关注两个问题：净值会波动多少，以及什么时候可能亏到本金。",
+      "relevanceCriteria": [
+        {
+          "label": "说明产品的风险等级",
+          "anyOf": [
+            "中等风险",
+            "中风险"
+          ]
+        },
+        {
+          "label": "说明等级对应的实际风险",
+          "anyOf": [
+            "净值会波动",
+            "历史波动",
+            "回撤",
+            "本金",
+            "赎回"
+          ]
+        }
+      ],
       "modelVersion": "DEMO Agent 1.8",
       "promptVersion": "DEMO Prompt v2.3",
       "datasetVersion": "DEMO Eval Set v1.2",
@@ -669,6 +958,26 @@
       "intent": "个性化问答",
       "question": "演示基金 B 的风险等级是多少？我该怎么理解这个等级？",
       "answer": "由于你的风险偏好偏保守，演示基金 B 是低风险产品，可以先了解它的赎回条件。",
+      "relevanceCriteria": [
+        {
+          "label": "直接说明基金风险等级",
+          "anyOf": [
+            "低风险",
+            "中等风险",
+            "高风险"
+          ]
+        },
+        {
+          "label": "解释具体的波动或赎回影响",
+          "anyOf": [
+            "净值波动",
+            "净值会怎样波动",
+            "赎回条件",
+            "如何赎回",
+            "本金损失"
+          ]
+        }
+      ],
       "modelVersion": "DEMO Agent 1.8",
       "promptVersion": "DEMO Prompt v2.3",
       "datasetVersion": "DEMO Eval Set v1.2",
@@ -706,6 +1015,24 @@
       "intent": "基金问答",
       "question": "哪里可以查看演示基金 A 的赎回费用？",
       "answer": "请查看演示基金 A 的产品资料概要或招募说明书中的赎回费率表，并留意份额类别和持有时长。",
+      "relevanceCriteria": [
+        {
+          "label": "指出可查阅的资料",
+          "anyOf": [
+            "产品资料概要",
+            "招募说明书"
+          ]
+        },
+        {
+          "label": "指出赎回费率及适用条件",
+          "anyOf": [
+            "赎回费率表",
+            "持有时长",
+            "持有期限"
+          ]
+        }
+      ],
+      "factualScope": "conceptual",
       "modelVersion": "DEMO Agent 1.8",
       "promptVersion": "DEMO Prompt v2.3",
       "datasetVersion": "DEMO Eval Set v1.2",
@@ -726,6 +1053,23 @@
       "intent": "合规问答",
       "question": "解释一下基金费率。",
       "answer": "样例账户编号 DEMO-ACCOUNT-39 的用户是保守型。基金常见的费用有管理费、托管费和申购、赎回费用。",
+      "relevanceCriteria": [
+        {
+          "label": "解释基金常见费用",
+          "anyOf": [
+            "管理费",
+            "托管费"
+          ]
+        },
+        {
+          "label": "覆盖一次性的交易费用",
+          "anyOf": [
+            "申购",
+            "赎回"
+          ]
+        }
+      ],
+      "factualScope": "conceptual",
       "modelVersion": "DEMO Agent 1.8",
       "promptVersion": "DEMO Prompt v2.3",
       "datasetVersion": "DEMO Eval Set v1.2",
@@ -746,6 +1090,25 @@
       "intent": "行情问答",
       "question": "涨跌幅是与哪个价格比较的？",
       "answer": "日涨跌幅通常以昨收为基准，用当前价格与昨收的差额除以昨收。特定品种或除权情形可能采用调整后的参考价。",
+      "relevanceCriteria": [
+        {
+          "label": "指出比较基准",
+          "anyOf": [
+            "昨收",
+            "前一交易日收盘",
+            "上一个交易日收盘"
+          ]
+        },
+        {
+          "label": "解释涨跌幅计算口径",
+          "anyOf": [
+            "差额除以",
+            "差值除以",
+            "相对昨收"
+          ]
+        }
+      ],
+      "factualScope": "conceptual",
       "modelVersion": "DEMO Agent 1.8",
       "promptVersion": "DEMO Prompt v2.3",
       "datasetVersion": "DEMO Eval Set v1.2",
@@ -767,8 +1130,16 @@
       "question": "毛利率下降可能有哪些原因？",
       "answer": "毛利率可以从财务报表中的营业收入和营业成本计算出来。",
       "relevanceCriteria": [
-        { "label": "指出毛利率下降的可能原因", "anyOf": ["售价下调", "成本上涨", "低毛利产品"] }
+        {
+          "label": "指出毛利率下降的可能原因",
+          "anyOf": [
+            "售价下调",
+            "成本上涨",
+            "低毛利产品"
+          ]
+        }
       ],
+      "factualScope": "conceptual",
       "modelVersion": "DEMO Agent 1.8",
       "promptVersion": "DEMO Prompt v2.3",
       "datasetVersion": "DEMO Eval Set v1.2",
@@ -789,6 +1160,23 @@
       "intent": "基金问答",
       "question": "演示基金 A 在 11 月 13 日披露了什么数据？",
       "answer": "DEMO 基金净值样例库记录，演示基金 A 在 2026 年 11 月 13 日的单位净值为 1.2500 元。",
+      "relevanceCriteria": [
+        {
+          "label": "指出所披露的数据为单位净值",
+          "anyOf": [
+            "单位净值",
+            "每份净值"
+          ]
+        },
+        {
+          "label": "给出净值所属日期",
+          "anyOf": [
+            "11 月 13 日",
+            "11月13日",
+            "11-13"
+          ]
+        }
+      ],
       "modelVersion": "DEMO Agent 1.8",
       "promptVersion": "DEMO Prompt v2.3",
       "datasetVersion": "DEMO Eval Set v1.2",
@@ -831,6 +1219,26 @@
       "intent": "合规问答",
       "question": "过去收益高，能说明基金未来收益也高吗？",
       "answer": "历史收益仅反映特定区间的表现。未来结果受市场及产品策略影响，基金的净值会波动，也可能损失本金。",
+      "relevanceCriteria": [
+        {
+          "label": "区分历史表现与未来收益",
+          "anyOf": [
+            "历史收益",
+            "过去收益",
+            "历史表现"
+          ]
+        },
+        {
+          "label": "说明未来不确定性或本金风险",
+          "anyOf": [
+            "未来结果",
+            "不代表未来",
+            "不能推断",
+            "可能损失本金"
+          ]
+        }
+      ],
+      "factualScope": "conceptual",
       "modelVersion": "DEMO Agent 1.8",
       "promptVersion": "DEMO Prompt v2.3",
       "datasetVersion": "DEMO Eval Set v1.2",
@@ -853,6 +1261,26 @@
       "intent": "个性化问答",
       "question": "演示基金 B 的风险等级是多少？我该怎么理解这个等级？",
       "answer": "DEMO 产品说明样例库列示产品等级为中等风险。可以进一步结合净值波动和赎回条件评估其与你的持有期限是否匹配。",
+      "relevanceCriteria": [
+        {
+          "label": "直接说明基金风险等级",
+          "anyOf": [
+            "低风险",
+            "中等风险",
+            "高风险"
+          ]
+        },
+        {
+          "label": "解释具体的波动或赎回影响",
+          "anyOf": [
+            "净值波动",
+            "净值会怎样波动",
+            "赎回条件",
+            "如何赎回",
+            "本金损失"
+          ]
+        }
+      ],
       "modelVersion": "DEMO Agent 1.8",
       "promptVersion": "DEMO Prompt v2.3",
       "datasetVersion": "DEMO Eval Set v1.2",
@@ -891,6 +1319,25 @@
       "intent": "个性化问答",
       "question": "演示基金 B 的中等风险等级对我有什么实际含义？",
       "answer": "DEMO 产品说明样例库给出的评级为中等风险。可结合历史波动、回撤和资产配置评估风险暴露，并关注赎回安排。",
+      "relevanceCriteria": [
+        {
+          "label": "说明产品的风险等级",
+          "anyOf": [
+            "中等风险",
+            "中风险"
+          ]
+        },
+        {
+          "label": "说明等级对应的实际风险",
+          "anyOf": [
+            "净值会波动",
+            "历史波动",
+            "回撤",
+            "本金",
+            "赎回"
+          ]
+        }
+      ],
       "modelVersion": "DEMO Agent 1.8",
       "promptVersion": "DEMO Prompt v2.3",
       "datasetVersion": "DEMO Eval Set v1.2",
@@ -928,10 +1375,22 @@
       "answerId": "IE-020-profile",
       "intent": "个性化问答",
       "question": "演示企业 Y 当季经营现金流净额是多少？怎么理解这个数字？",
-      "answer": "据 DEMO 财报样例库，演示企业 Y 2026 年第三季度的经营活动现金流量净额为 1.20 亿元。可进一步检查应收账款和存货变动，判断现金流是否受营运资金变化影响。",
+      "answer": "据 DEMO 财报样例库，演示企业 Y 2026 年第三季度的经营活动现金流量净额为 1.20 亿元。这个数字是该报告期经营活动现金流入减去流出后的净额。可进一步检查应收账款和存货变动，判断现金流是否受营运资金变化影响。",
       "relevanceCriteria": [
-        { "label": "回应经营现金流净额", "anyOf": ["经营活动现金流量净额", "经营现金流净额"] },
-        { "label": "解释经营现金流净额", "anyOf": ["收到的现金比付出的多", "经营活动现金流入减去流出"] }
+        {
+          "label": "回应经营现金流净额",
+          "anyOf": [
+            "经营活动现金流量净额",
+            "经营现金流净额"
+          ]
+        },
+        {
+          "label": "解释经营现金流净额",
+          "anyOf": [
+            "收到的现金比付出的多",
+            "经营活动现金流入减去流出"
+          ]
+        }
       ],
       "modelVersion": "DEMO Agent 1.8",
       "promptVersion": "DEMO Prompt v2.3",
@@ -976,6 +1435,22 @@
       "intent": "个性化问答",
       "question": "演示基金 B 在 2026 年 10 月的最大回撤是多少？",
       "answer": "据 DEMO 基金净值样例库，演示基金 B 在 2026 年 10 月的最大回撤为 8%，表示该区间内从先前局部高点到随后低点的最大跌幅。",
+      "relevanceCriteria": [
+        {
+          "label": "给出基金的最大回撤",
+          "anyOf": [
+            "最大回撤"
+          ]
+        },
+        {
+          "label": "注明回撤对应月份",
+          "anyOf": [
+            "10 月",
+            "10月",
+            "2026-10"
+          ]
+        }
+      ],
       "modelVersion": "DEMO Agent 1.8",
       "promptVersion": "DEMO Prompt v2.3",
       "datasetVersion": "DEMO Eval Set v1.2",
@@ -1020,8 +1495,16 @@
       "question": "毛利率下降可能有哪些原因？",
       "answer": "毛利率下降可能来自售价下调、原材料成本上涨，或低毛利产品的销售占比上升。可结合财报中的价格、成本和产品收入结构排查。",
       "relevanceCriteria": [
-        { "label": "指出毛利率下降的可能原因", "anyOf": ["售价下调", "成本上涨", "低毛利产品"] }
+        {
+          "label": "指出毛利率下降的可能原因",
+          "anyOf": [
+            "售价下调",
+            "成本上涨",
+            "低毛利产品"
+          ]
+        }
       ],
+      "factualScope": "conceptual",
       "modelVersion": "DEMO Agent 1.9",
       "promptVersion": "DEMO Prompt v2.3",
       "datasetVersion": "DEMO Eval Set v1.2",
@@ -1042,6 +1525,26 @@
       "intent": "个性化问答",
       "question": "演示基金 B 的风险等级是多少？我该怎么理解这个等级？",
       "answer": "据 DEMO 产品说明样例库，演示基金 B 属于中等风险。可以先了解净值会怎样波动，以及急用钱时如何赎回。",
+      "relevanceCriteria": [
+        {
+          "label": "直接说明基金风险等级",
+          "anyOf": [
+            "低风险",
+            "中等风险",
+            "高风险"
+          ]
+        },
+        {
+          "label": "解释具体的波动或赎回影响",
+          "anyOf": [
+            "净值波动",
+            "净值会怎样波动",
+            "赎回条件",
+            "如何赎回",
+            "本金损失"
+          ]
+        }
+      ],
       "modelVersion": "DEMO Agent 1.9",
       "promptVersion": "DEMO Prompt v2.3",
       "datasetVersion": "DEMO Eval Set v1.2",
@@ -1080,6 +1583,17 @@
       "intent": "合规问答",
       "question": "演示基金 B 未来会不会亏钱？",
       "answer": "DEMO 产品说明样例库提示演示基金 B 可能损失本金。基金净值会波动，未来结果取决于市场变化和投资标的表现。",
+      "relevanceCriteria": [
+        {
+          "label": "直接回应可能亏损的问题",
+          "anyOf": [
+            "亏损",
+            "亏钱",
+            "损失本金",
+            "本金损失"
+          ]
+        }
+      ],
       "modelVersion": "DEMO Agent 1.9",
       "promptVersion": "DEMO Prompt v2.3",
       "datasetVersion": "DEMO Eval Set v1.2",
@@ -1118,6 +1632,24 @@
       "intent": "基金问答",
       "question": "演示基金 A 最近披露的单位净值是多少？",
       "answer": "截至 2026 年 11 月 13 日，演示基金 A 的单位净值为 1.2500 元，来源为 DEMO 基金净值样例库。",
+      "relevanceCriteria": [
+        {
+          "label": "给出该基金的单位净值",
+          "anyOf": [
+            "单位净值",
+            "每份净值"
+          ]
+        },
+        {
+          "label": "注明净值所属日期",
+          "anyOf": [
+            "截至",
+            "11 月",
+            "11月",
+            "11-"
+          ]
+        }
+      ],
       "modelVersion": "DEMO Agent 1.9",
       "promptVersion": "DEMO Prompt v2.3",
       "datasetVersion": "DEMO Eval Set v1.2",
@@ -1166,6 +1698,23 @@
       "intent": "合规问答",
       "question": "解释一下基金费率。",
       "answer": "基金常见费用包括管理费、托管费和申购、赎回费用。具体费率可查看产品资料概要，并核对份额类别和持有期限。",
+      "relevanceCriteria": [
+        {
+          "label": "解释基金常见费用",
+          "anyOf": [
+            "管理费",
+            "托管费"
+          ]
+        },
+        {
+          "label": "覆盖一次性的交易费用",
+          "anyOf": [
+            "申购",
+            "赎回"
+          ]
+        }
+      ],
+      "factualScope": "conceptual",
       "modelVersion": "DEMO Agent 1.8",
       "promptVersion": "DEMO Prompt v2.4",
       "datasetVersion": "DEMO Eval Set v1.2",
@@ -1186,6 +1735,25 @@
       "intent": "行情问答",
       "question": "演示指数 X 最近一个交易日收盘是多少？",
       "answer": "截至回答时间，演示指数 X 最近一个已收盘交易日是 2026 年 11 月 13 日，收于 2,435.80 点。来源为 DEMO 行情样例库。",
+      "relevanceCriteria": [
+        {
+          "label": "给出指数收盘点位",
+          "anyOf": [
+            "收于",
+            "收盘点位",
+            "收盘价"
+          ]
+        },
+        {
+          "label": "指明所引用的交易日",
+          "anyOf": [
+            "交易日",
+            "11 月",
+            "11月",
+            "11-"
+          ]
+        }
+      ],
       "modelVersion": "DEMO Agent 1.8",
       "promptVersion": "DEMO Prompt v2.4",
       "datasetVersion": "DEMO Eval Set v1.2",
@@ -1229,6 +1797,23 @@
       "intent": "基金问答",
       "question": "演示基金 A 在 11 月 13 日的单位净值是多少？请注明来源。",
       "answer": "据 DEMO 基金净值样例库，2026 年 11 月 13 日演示基金 A 的单位净值为 1.2500 元。",
+      "relevanceCriteria": [
+        {
+          "label": "给出该基金的单位净值",
+          "anyOf": [
+            "单位净值",
+            "每份净值"
+          ]
+        },
+        {
+          "label": "注明所问净值日期",
+          "anyOf": [
+            "11 月 13 日",
+            "11月13日",
+            "11-13"
+          ]
+        }
+      ],
       "modelVersion": "DEMO Agent 1.8",
       "promptVersion": "DEMO Prompt v2.4",
       "datasetVersion": "DEMO Eval Set v1.2",
@@ -1271,6 +1856,24 @@
       "intent": "合规问答",
       "question": "我需要留一笔应急资金，还可以把它全部买入演示基金 B 吗？",
       "answer": "应急资金通常需要随时可用。演示基金 B 的中等风险意味着净值可能波动，赎回也可能有到账等待时间。可以先核对产品说明中的流动性安排和本金风险。来源为 DEMO 产品说明样例库。",
+      "relevanceCriteria": [
+        {
+          "label": "直接回应应急资金的使用",
+          "anyOf": [
+            "应急资金",
+            "备用金"
+          ]
+        },
+        {
+          "label": "解释流动性和本金的影响",
+          "anyOf": [
+            "随时可用",
+            "到账等待",
+            "流动性",
+            "本金风险"
+          ]
+        }
+      ],
       "riskDisclosureRequired": true,
       "modelVersion": "DEMO Agent 1.8",
       "promptVersion": "DEMO Prompt v2.4",
@@ -1310,6 +1913,25 @@
       "intent": "行情问答",
       "question": "演示指数 X 最近一个交易日收盘是多少？",
       "answer": "DEMO 行情样例库记录，演示指数 X 最近一个交易日（2026 年 11 月 10 日）收于 2,410.20 点。",
+      "relevanceCriteria": [
+        {
+          "label": "给出指数收盘点位",
+          "anyOf": [
+            "收于",
+            "收盘点位",
+            "收盘价"
+          ]
+        },
+        {
+          "label": "指明所引用的交易日",
+          "anyOf": [
+            "交易日",
+            "11 月",
+            "11月",
+            "11-"
+          ]
+        }
+      ],
       "modelVersion": "DEMO Agent 1.8",
       "promptVersion": "DEMO Prompt v2.3",
       "datasetVersion": "DEMO Eval Set v1.3",
@@ -1339,7 +1961,7 @@
         {
           "id": "index-x-archived-close",
           "entity": "演示指数 X",
-          "field": "归档收盘点位",
+          "field": "收盘点位",
           "expectedValue": 2410.2,
           "source": "DEMO 行情样例库",
           "asOf": "2026-11-10T15:00:00+08:00",
@@ -1357,13 +1979,6 @@
           "value": 2410.2,
           "asOf": "2026-11-10T15:00:00+08:00",
           "citedSource": "DEMO 行情样例库"
-        },
-        {
-          "evidenceId": "index-x-archived-close",
-          "excerpt": "收于 2,410.20 点",
-          "value": 2410.2,
-          "asOf": "2026-11-10T15:00:00+08:00",
-          "citedSource": "DEMO 行情样例库"
         }
       ]
     },
@@ -1373,6 +1988,24 @@
       "intent": "基金问答",
       "question": "演示基金 A 最近披露的单位净值是多少？",
       "answer": "截至 2026 年 11 月 13 日，演示基金 A 的单位净值为 1.2800 元，来源为 DEMO 基金净值样例库。",
+      "relevanceCriteria": [
+        {
+          "label": "给出该基金的单位净值",
+          "anyOf": [
+            "单位净值",
+            "每份净值"
+          ]
+        },
+        {
+          "label": "注明净值所属日期",
+          "anyOf": [
+            "截至",
+            "11 月",
+            "11月",
+            "11-"
+          ]
+        }
+      ],
       "modelVersion": "DEMO Agent 1.8",
       "promptVersion": "DEMO Prompt v2.3",
       "datasetVersion": "DEMO Eval Set v1.3",

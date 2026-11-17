@@ -1,6 +1,6 @@
 # InvestEval · 投资 Agent 回答质量评测平台
 
-[打开线上演示](https://invest-eval.vercel.app) · [查看测试与验收记录](docs/TESTING.md)
+[打开线上演示](https://invest-eval.vercel.app) · [演示视频（2 分 02 秒）](docs/InvestEval-demo.mp4) · [查看测试与验收记录](docs/TESTING.md)
 
 投资 Agent 的回答可能遗漏问题要点、引用错误或过期的金融数据，也可能因用户画像而改变客观事实。InvestEval 帮助投资产品经理、模型与 Prompt 开发者、质量及合规复核人员发现、定位和比较这些问题。平台不生成投资建议，也不执行交易。
 
@@ -15,7 +15,7 @@
 
 页面使用 Next.js App Router、React、TypeScript 和 Tailwind CSS。`POST /api/evaluate` 在服务端读取模拟样例，先运行确定性规则，再按配置调用 LLM Judge。总览、列表、详情和版本对比共享浏览器工作区；最近一次评测、复核及反馈存入 `localStorage`。
 
-规则引擎用结构化声明、模拟原始证据及回答时间核验数字、单位、时效和同证据画像对照，并检测常见合规与隐私信号。LLM Judge 评估相关性、完整性、表达是否适合画像以及语义合规风险，提供辅助归因。服务端校验模型返回的 JSON、分数、风险值和归因范围。语义分独立展示，不覆盖规则综合分或金融证据结论。Judge 缺少配置、超时或失败时，界面标记评测不完整并保留规则结果。
+规则引擎用结构化声明、模拟原始证据及回答时间核验数字、单位、时效和同证据画像对照，并检测常见合规和隐私信号，包括主动披露非必要的画像属性。24 条基准问答及其 14 条变体都有逐题评分要点。LLM Judge 使用对应意图的标准和逐题要点评估相关性、完整性、个性化表达与语义风险。规则确定五维综合分，语义分和辅助归因独立显示。Judge 缺少配置、超时或失败时，界面标记评测不完整并保留规则结果。
 
 ## 本地启动
 
@@ -44,8 +44,11 @@ npm run start
 | `LLM_BASE_URL` | OpenAI-compatible API 基础地址，包含版本路径且省略 `/chat/completions`；例如 `https://api.openai.com/v1`。 |
 | `LLM_MODEL` | 服务商提供的模型标识，需支持 Chat Completions JSON 模式。 |
 | `LLM_API_KEY` | 服务端密钥。留空时只运行规则，引导用户查看不完整状态。 |
+| `LLM_AUTH_MODE` | 设为 `vercel-oidc` 时，使用 Vercel AI Gateway 和服务端 OIDC，仍由 `LLM_MODEL` 指定模型。 |
 
-不要添加 `NEXT_PUBLIC_` 前缀或把密钥提交到仓库。公开演示建议先留空密钥：目前评测接口无登录和限流，启用云端 Judge 会接受访客发起的模型请求。
+密钥由服务端读取。线上演示的接口只接受固定样例 ID，AI Gateway 模式对同一模型、提示词和输入复用已校验的成功结果。详情展示模型及生成时间，每次运行仍重新计算规则。Gateway 项目预算耗尽或上游不可用时，页面保留本次规则结果。 [Vercel AI Gateway 认证](https://vercel.com/docs/ai-gateway/authentication-and-byok)
+
+截至 2026-11-17，公开站已配置 GPT-4.1 mini Judge，网关仍要求完成账户验证。访客可以执行规则、复核、反馈和版本对比。错误码和本地 Judge 复验方法见 [测试说明](docs/TESTING.md)。
 
 接口接受 `answerId` 或 `answerIds`（批量最多 5 条）。例如在 PowerShell 执行：
 

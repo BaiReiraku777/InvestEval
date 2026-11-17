@@ -79,6 +79,8 @@ export interface EvaluationCase extends Versions {
   evidence: Evidence[];
   claims: Claim[];
   relevanceCriteria?: RelevanceCriterion[];
+  /** The question calls for a conceptual explanation without a dataset-backed claim. */
+  factualScope?: "conceptual";
   riskDisclosureRequired?: boolean;
 }
 

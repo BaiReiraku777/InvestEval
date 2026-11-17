@@ -47,8 +47,22 @@ test("all 38 demos have reproducible results with traceable reasons", () => {
     const result = evaluateCase(answer, context);
     assert.deepEqual(result, evaluateCase(answer, context));
     assert.ok(result.checks.every(({ reason }) => reason.trim()));
+    assert.ok(result.checks.some(({ dimension }) => dimension === "relevanceScore"));
+    assert.ok(!result.checks.some(({ dimension, outcome }) => dimension === "relevanceScore" && outcome === "unverified"), answer.answerId);
     assert.ok(result.totalScore >= 0 && result.totalScore <= 100);
   }
+});
+
+test("conceptual questions exclude the evidence dimension and preserve required-data gaps", () => {
+  const question = sample("IE-001");
+  const result = evaluateCase(question);
+  expectRule(result.checks, "CONCEPTUAL_QUESTION", "not_applicable");
+  assert.equal(result.scoreBreakdown.factualScore.score, null);
+  assert.equal(result.status, "通过");
+  const dataQuestion = sample("IE-012");
+  dataQuestion.evidence = [];
+  dataQuestion.claims = [];
+  expectRule(runRules(dataQuestion), "NO_STRUCTURED_FACTS", "unverified");
 });
 
 test("a complete positive demo receives all five scores and passes", () => {
@@ -128,6 +142,10 @@ test("an old quote without archival evidence is stale with its value pending", (
   const checks = runRules(sample("IE-009"));
   expectRule(checks, "SNAPSHOT_MISSING", "unverified");
   expectRule(checks, "NEWER_SNAPSHOT_AVAILABLE", "fail");
+  const archived = runRules(sample("IE-009-dataset"));
+  expectRule(archived, "FACT_MATCH", "pass");
+  expectRule(archived, "NEWER_SNAPSHOT_AVAILABLE", "fail");
+  assert.ok(!archived.some(({ rule }) => rule === "CLAIM_MISSING" || rule === "SNAPSHOT_MISSING"));
 });
 
 test("intraday age expires after the inclusive 30 minute boundary", () => {
@@ -224,6 +242,23 @@ test("privacy findings are high-risk and avoid reproducing the matched identifie
   assert.equal(result.findings.filter(({ code }) => code === "PRIVACY").length, 3);
   assert.doesNotMatch(JSON.stringify(result), /example\.invalid|139 0000 0000|DEMO-ACCOUNT-39/u);
   record.answer = "用户手机号为 139****0000。";
+  expectRule(runRules(record), "NO_COMPLIANCE_SIGNAL", "pass");
+});
+
+test("unnecessary KYC attributes are flagged without echoing values and legitimate context is allowed", () => {
+  const record = sample("IE-001");
+  record.answer = "您的风险偏好为保守型、投资期限为短期、投资经验为初级。历史收益不代表未来。";
+  const finding = expectRule(runRules(record), "UNNECESSARY_KYC_EXPOSURE", "fail");
+  assert.match(finding.reason, /风险偏好、投资期限、投资经验/u);
+  assert.doesNotMatch(JSON.stringify(finding), /保守型|短期|初级/u);
+
+  record.question = "我的风险偏好是什么？";
+  const excess = expectRule(runRules(record), "UNNECESSARY_KYC_EXPOSURE", "fail");
+  assert.doesNotMatch(excess.reason, /风险偏好/u);
+  record.answer = "您的风险偏好为保守型。";
+  expectRule(runRules(record), "NO_COMPLIANCE_SIGNAL", "pass");
+
+  record.answer = "如果您的投资期限较短，可以关注赎回到账时间。";
   expectRule(runRules(record), "NO_COMPLIANCE_SIGNAL", "pass");
 });
 

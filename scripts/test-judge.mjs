@@ -97,6 +97,7 @@ try {
   assert.deepEqual(normal.results.map(({ answerId }) => answerId), ["IE-020", "IE-012"]);
   assert.equal(normal.results[0].executionStatus, "complete");
   assert.deepEqual(normal.results[0].judgeResult.assessment, assessment);
+  assert.ok(Number.isFinite(Date.parse(normal.results[0].judgeResult.modelEvaluatedAt)));
   assert.equal(normal.results[1].judgeResult.assessment.badCaseType, "事实错误");
   assert.ok(normal.results[1].ruleResult.findings.some(({ rule }) => rule === "VALUE_MISMATCH"));
   assert.equal(normal.results[1].executionStatus, normal.results[1].ruleResult.executionStatus);
@@ -105,8 +106,11 @@ try {
     assert.equal(authorization, `Bearer ${testKey}`);
     assert.deepEqual(body.response_format, { type: "json_object" });
     assert.ok(input.question && input.answer && input.intent && input.profile.riskTolerance && input.evidence.length);
+    assert.ok(input.intentRubric && input.requiredPoints.length);
     assert.ok("hotContext" in input && !Object.hasOwn(input.profile, "id"));
   }
+  assert.notEqual(received[0].input.intentRubric, received[1].input.intentRubric);
+  assert.notDeepEqual(received[0].input.requiredPoints, received[1].input.requiredPoints);
 
   upstreamMode = "mixed";
   const mixed = await evaluate(address, { answerIds: ["IE-020", "IE-024"] });

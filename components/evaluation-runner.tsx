@@ -97,6 +97,7 @@ export function EvaluationRunCard({ run, link = false }: { run: EvaluationRun; l
           <h4>LLM Judge · 语义评测</h4>
           {judgeResult.status === "complete" && assessment ? <>
             <p className="muted">评测模型：{judgeResult.model}</p>
+            {judgeResult.modelEvaluatedAt && <p className="muted">模型生成时间：{formatDateTime(judgeResult.modelEvaluatedAt)}</p>}
             <dl className="run-metadata">
               <div><dt>相关性</dt><dd>{assessment.relevanceScore} / 100</dd></div>
               <div><dt>完整性</dt><dd>{assessment.completenessScore} / 100</dd></div>

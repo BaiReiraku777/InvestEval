@@ -13,7 +13,7 @@ export interface JudgeAssessment {
 }
 
 export type JudgeRun =
-  | { status: "complete"; model: string; assessment: JudgeAssessment }
+  | { status: "complete"; model: string; assessment: JudgeAssessment; modelEvaluatedAt?: string }
   | { status: "not_configured"; message: string }
   | { status: "failed"; code: "CONFIGURATION" | "TIMEOUT" | "UPSTREAM_ERROR" | "INVALID_RESPONSE"; message: string };
 
