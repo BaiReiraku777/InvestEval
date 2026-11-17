@@ -80,11 +80,14 @@ try {
   const address = await startApp(testKey);
   const rulesOnlyAddress = await startApp("");
   const rulesOnly = await evaluate(rulesOnlyAddress, { answerId: "IE-024" });
-  assert.equal(rulesOnly.executionStatus, "incomplete");
+  assert.equal(rulesOnly.executionStatus, "complete");
   assert.equal(rulesOnly.results[0].mode, "rules_only");
   assert.equal(rulesOnly.results[0].judgeResult.status, "not_configured");
   assert.equal(rulesOnly.results[0].highRisk, true);
   assert.equal(rulesOnly.result.status, "失败");
+  const needsEvidence = await evaluate(rulesOnlyAddress, { answerId: "IE-009" });
+  assert.equal(needsEvidence.executionStatus, "incomplete");
+  assert.ok(needsEvidence.result.checks.some(({ rule }) => rule === "SNAPSHOT_MISSING"));
   assert.equal(requests, 0);
 
   const limited = await evaluate(address, { answerIds: Array(6).fill("IE-020") }, 400);

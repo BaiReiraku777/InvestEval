@@ -19,14 +19,13 @@ export async function POST(request: Request) {
     return Response.json({ error: { code: "ANSWER_NOT_FOUND", message: "找不到一条或多条指定的演示回答。" } }, { status: 404 });
   }
   const evaluatedAt = new Date().toISOString();
-  const gatewayToken = process.env.VERCEL === "1" ? request.headers.get("x-vercel-oidc-token") : null;
   const results = await Promise.all(answers.map(async (record): Promise<EvaluationRun> => {
     const ruleResult = evaluateCase(record, { answers: allAnswers, profilePairs }, evaluatedAt);
-    const judgeResult = await runJudge(record, ruleResult, gatewayToken);
+    const judgeResult = await runJudge(record, ruleResult);
     return {
       answerId: record.answerId,
       mode: judgeResult.status === "not_configured" ? "rules_only" : "rules_and_llm",
-      executionStatus: ruleResult.executionStatus === "complete" && judgeResult.status === "complete" ? "complete" : "incomplete",
+      executionStatus: judgeResult.status === "failed" ? "incomplete" : ruleResult.executionStatus,
       highRisk: ruleResult.riskLevel === "high" || (judgeResult.status === "complete" && judgeResult.assessment.complianceRisk === "high"),
       ruleResult,
       judgeResult,

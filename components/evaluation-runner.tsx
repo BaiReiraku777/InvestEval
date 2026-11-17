@@ -5,6 +5,7 @@ import Link from "next/link";
 import { formatDateTime, formatScore } from "@/data/demo";
 import { MAX_EVALUATION_CASES, type EvaluationRun } from "@/lib/evaluator/evaluation-run";
 import { isRun, saveRun, useEvaluationState } from "@/lib/evaluation-store";
+import { evaluationExecutionLabel } from "@/lib/evaluation-view";
 import { dimensions } from "@/lib/types";
 import { StatusBadge } from "./evaluation-ui";
 
@@ -63,7 +64,7 @@ export function EvaluationRunCard({ run, link = false }: { run: EvaluationRun; l
         <span className="intent-label">实时评测</span>
         <span className="muted numeric">{formatDateTime(ruleResult.evaluatedAt)}（UTC+8）</span>
         <span className={`status ${run.executionStatus === "complete" ? "success" : "warning"}`}>
-          {run.executionStatus === "complete" ? "评测已完成" : "评测不完整"}
+          {evaluationExecutionLabel(run)}
         </span>
         {run.highRisk && <span className="status danger">高风险 · 失败</span>}
       </div>
@@ -108,7 +109,7 @@ export function EvaluationRunCard({ run, link = false }: { run: EvaluationRun; l
             <p><strong>评测说明：</strong>{assessment.explanation}</p>
             <p className="muted">金融事实以规则核验和原始证据为准。</p>
           </> : <p className={judgeResult.status === "failed" ? "evaluation-error" : undefined}>
-            {judgeResult.status === "failed" ? `评测异常（${judgeResult.code}）：` : "仅规则评测："}
+            {judgeResult.status === "failed" && `评测异常（${judgeResult.code}）：`}
             {judgeResult.status !== "complete" && judgeResult.message}
           </p>}
         </div>

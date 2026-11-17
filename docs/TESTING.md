@@ -10,11 +10,11 @@
 | 概念和数据题 | `IE-001` 无金融快照需要核验，适用维度重归一化后得 100。移除 `IE-012` 的声明和证据会进入待核验。真实运行 `IE-012` 得 70.6：相关性、时效和合规通过，适用权重为 20、25、15、25，事实得 0。证据 ID `fund-a-nav`，回答 1.2800 元，模拟证据 1.2500 元。 |
 | KYC 与高风险 | `IE-007` 命中 `VALUE_MISMATCH`、`PROFILE_FACT_DRIFT` 和 `UNNECESSARY_KYC_EXPOSURE`，披露归因仅输出字段名。单项自查和假设性表达有正向覆盖。`IE-005` 可识别账户泄露及 `IE-024` 直接买卖指令仍为高风险失败。 |
 | 浏览器交互 | 生产构建通过 41 个有效页面、无效路由和参数、批量评测、异常保留规则、确认和驳回、反馈及刷新恢复、三类版本对比、移动端宽度和损坏存储恢复。 |
-| 公开部署与 Judge | 生产接口无登录实测返回新规则结果。Vercel AI Gateway 的生产调用保留规则并返回 `UPSTREAM_ERROR`；同项目 OIDC 令牌对网关的独立请求返回 HTTP 403 `customer_verification_required`，账户需验证后才能调用真实云端模型。本地协议测试与此前的真实本地模型记录见下文。 |
+| 公开部署与 Judge | 公开站使用规则模式。正常样例 `IE-020` 返回 100 分、`mode: rules_only` 和 `executionStatus: complete`。缺少历史快照的 `IE-009` 仍为待核验。`IE-024` 的规则执行完毕，质量结论为高风险失败。语义接口通过本地测试桩复验。 |
 
 数据、权重和复验入口分别见 [问答样例](../data/demo-cases.json)、[评分实现](../lib/evaluator/scoring.ts)及 [Judge HTTP 脚本](../scripts/test-judge.mjs)。在线演示仍可核对规则、人工复核、用户反馈和版本比较。
 
-[交付录屏](InvestEval-demo.mp4) 为本地生产构建与真实网关异常路径操作录制，带中文字幕，时长 122.24 秒。FFmpeg 完整解码通过。SHA-256 为 `f9cced933c695373bce94b76b75cfdc14464eaf04b0f5301c487a1bee53640de`。
+[交付录屏](InvestEval-demo.mp4) 使用本地生产构建录制，带中文字幕，展示考试演示的规则评测主链路。时长 99.72 秒，FFmpeg 完整解码通过，SHA-256 为 `e5c2de52d6303fcf5b5f0f2fc9c4a21f518e0f83081e1ed64cfbcdcb0dcbb522`。
 
 ## 交付验收记录 · 2026-11-16（北京时间）
 
@@ -80,13 +80,13 @@ npm run typecheck
 
 ## 生产服务冒烟验证
 
-构建后运行 `npm run start`，使用 `POST /api/evaluate` 和 JSON 请求体 `{"answerId":"IE-020"}`。响应中 `result.source` 为 `run`，`result.executionStatus` 为 `complete`，`result.totalScore` 为 100。未配置 Judge 时，响应顶层 `executionStatus` 为 `incomplete`。按表中 ID 发送请求可复现六类归因。
+构建后运行 `npm run start`，使用 `POST /api/evaluate` 和 JSON 请求体 `{"answerId":"IE-020"}`。响应中 `result.source` 为 `run`，`result.executionStatus` 为 `complete`，`result.totalScore` 为 100。规则模式下，响应顶层也为 `complete`。按表中 ID 发送请求可复现六类归因。
 
 规则阶段的生产 HTTP 验证覆盖总览、问答评测中心、版本对比和 38 个回答详情，共 41 个成功页面。无效详情和未知回答 ID 返回 404。无效 JSON、缺少字段、类型错误返回 400，GET 评测接口返回 405。
 
 ## LLM Judge 接口与页面
 
-`POST /api/evaluate` 接受 `{"answerId":"IE-020"}` 或 `{"answerIds":["IE-020","IE-024"]}`。批量最多 5 条，同一批重复 ID 只调用一次。超限、无效输入及未知 ID 在调用模型前拒绝。有效请求返回 `results`，每项分别带 `ruleResult`、`judgeResult`、`executionStatus`、`mode` 和 `highRisk`。单条请求保留 `result` 作为规则结果的兼容字段。不完整的批次仍返回规则等已获得的结果；调用端以 `executionStatus` 判定是否完整。缺少 API Key 时 `mode` 为 `rules_only`、`judgeResult.status` 为 `not_configured`。
+`POST /api/evaluate` 接受 `{"answerId":"IE-020"}` 或 `{"answerIds":["IE-020","IE-024"]}`。批量最多 5 条，同一批重复 ID 只评测一次。超限、无效输入及未知 ID 在评测前拒绝。有效请求返回 `results`，每项分别带 `ruleResult`、`judgeResult`、`executionStatus`、`mode` 和 `highRisk`。单条请求保留 `result` 作为规则结果的兼容字段。规则模式的 `mode` 为 `rules_only`、`judgeResult.status` 为 `not_configured`，`executionStatus` 跟随规则阶段执行状态。批次保留已获得的结果，待核验项可从 `checks` 追溯。
 
 模型以 JSON 模式返回评测对象。服务端校验 JSON、必填字段、风险枚举和 0–100 的数字分数。事实错误归因须有规则已确认的数值或单位不符。无证据、来源缺失或证据冲突须查看规则中的待核验与缺少来源标记。Judge 不提供金融事实准确分。模型服务错误、30 秒超时及不合法输出均令本次评测不完整，单条失败不丢弃批次中的其他有效结果。
 

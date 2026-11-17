@@ -3,6 +3,11 @@ import type { EvaluationRun } from "@/lib/evaluator/evaluation-run";
 
 export const riskLabels = { low: "低风险", medium: "中风险", high: "高风险" };
 
+export function evaluationExecutionLabel(run: EvaluationRun) {
+  if (run.mode === "rules_only") return run.executionStatus === "complete" ? "规则评测已完成" : "规则评测待核验";
+  return run.executionStatus === "complete" ? "评测已完成" : "评测不完整";
+}
+
 export interface EvaluationState {
   runs: Record<string, EvaluationRun>;
   reviews: Record<string, ReviewRecord>;
@@ -29,7 +34,7 @@ export function evaluationFor(record: EvaluatedCase, run?: EvaluationRun) {
     score: run && Object.values(run.ruleResult.scoreBreakdown).every(({ score }) => score === null) ? null : result.totalScore,
     dimension: (key: ScoreDimension) => run ? run.ruleResult.scoreBreakdown[key].score : result[key],
     sourceLabel: run ? "实时评测" : "DEMO 预置",
-    executionLabel: !run ? "预置结果" : run.executionStatus === "complete" ? "评测已完成" : "评测不完整",
+    executionLabel: run ? evaluationExecutionLabel(run) : "预置结果",
   };
 }
 

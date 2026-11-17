@@ -1,5 +1,4 @@
 import "server-only";
-import { unstable_cache } from "next/cache";
 import { findingTypes, type EvaluationCase, type Intent } from "../types";
 import type { JudgeAssessment, JudgeRun } from "./evaluation-run";
 import type { RuleEvaluationResult } from "./scoring";
@@ -7,7 +6,6 @@ import { redactPersonalData } from "./text-rules";
 
 const TIMEOUT_MS = 30_000;
 const evidenceAttributions = new Set(["事实错误", "时效过期", "个性化失真"]);
-const gatewayBaseUrl = "https://ai-gateway.vercel.sh/v1";
 
 const intentRubrics = {
   行情问答: "检查是否回答指定标的、所问价格或涨跌幅与对应交易时点，最新行情应交代日期和来源。",
@@ -39,12 +37,6 @@ function failed(code: JudgeErrorCode): JudgeRun {
   return { status: "failed", code, message: messages[code] };
 }
 
-class JudgeError extends Error {
-  constructor(readonly code: JudgeErrorCode) {
-    super(code);
-  }
-}
-
 function object(value: unknown): value is Record<string, unknown> {
   return value !== null && typeof value === "object" && !Array.isArray(value);
 }
@@ -71,12 +63,11 @@ function parseAssessment(content: string, allowedAttributions: ReadonlySet<strin
   };
 }
 
-export async function runJudge(record: EvaluationCase, rules: RuleEvaluationResult, gatewayToken: string | null): Promise<JudgeRun> {
-  const useGateway = process.env.LLM_AUTH_MODE === "vercel-oidc";
-  const key = useGateway ? (gatewayToken ?? process.env.VERCEL_OIDC_TOKEN)?.trim() : process.env.LLM_API_KEY?.trim();
-  if (!key) return useGateway ? failed("CONFIGURATION") : { status: "not_configured", message: "未配置 LLM API Key，本次仅运行规则评测。" };
+export async function runJudge(record: EvaluationCase, rules: RuleEvaluationResult): Promise<JudgeRun> {
+  const key = process.env.LLM_API_KEY?.trim();
+  if (!key) return { status: "not_configured", message: "演示使用规则评测，LLM Judge 接口可通过本地测试桩验证。" };
 
-  const baseUrl = useGateway ? gatewayBaseUrl : process.env.LLM_BASE_URL?.trim();
+  const baseUrl = process.env.LLM_BASE_URL?.trim();
   const model = process.env.LLM_MODEL?.trim();
   if (!baseUrl || !model) return failed("CONFIGURATION");
   let endpoint: URL;
@@ -109,21 +100,6 @@ export async function runJudge(record: EvaluationCase, rules: RuleEvaluationResu
     evidenceChecks: rules.checks.filter(({ dimension }) => dimension === "factualScore" || dimension === "timelinessScore")
       .map(({ rule, outcome, reason, evidenceIds }) => ({ rule, outcome, reason: redactPersonalData(reason), evidenceIds })),
   };
-  const serializedInput = JSON.stringify(input);
-  try {
-    const evaluate = () => requestJudge(endpoint, key, model, serializedInput, evidenceBacked, useGateway);
-    if (!useGateway) return await evaluate();
-    // Public users submit fixture IDs. Reuse successful model output for the same immutable input and rubric.
-    const cached = unstable_cache(evaluate, ["invest-eval-judge", model, systemPrompt, serializedInput], { revalidate: false });
-    return await cached();
-  } catch (error) {
-    return failed(error instanceof JudgeError ? error.code : "UPSTREAM_ERROR");
-  }
-}
-
-async function requestJudge(
-  endpoint: URL, key: string, model: string, input: string, evidenceBacked: ReadonlySet<string>, useGateway: boolean,
-): Promise<Extract<JudgeRun, { status: "complete" }>> {
   const signal = AbortSignal.timeout(TIMEOUT_MS);
   try {
     const response = await fetch(endpoint, {
@@ -132,9 +108,8 @@ async function requestJudge(
       body: JSON.stringify({
         model,
         stream: false,
-        ...(useGateway ? { max_tokens: 550, temperature: 0 } : {}),
         response_format: { type: "json_object" },
-        messages: [{ role: "system", content: systemPrompt }, { role: "user", content: input }],
+        messages: [{ role: "system", content: systemPrompt }, { role: "user", content: JSON.stringify(input) }],
       }),
       cache: "no-store",
       redirect: "error",
@@ -142,7 +117,7 @@ async function requestJudge(
     });
     if (!response.ok) {
       await response.body?.cancel();
-      throw new JudgeError("UPSTREAM_ERROR");
+      return failed("UPSTREAM_ERROR");
     }
     const raw = await response.text();
     try {
@@ -150,16 +125,15 @@ async function requestJudge(
       const choice: unknown = object(body) && Array.isArray(body.choices) ? body.choices[0] : null;
       if (!object(choice) || (choice.finish_reason != null && choice.finish_reason !== "stop") ||
           !object(choice.message) || choice.message.refusal || typeof choice.message.content !== "string") {
-        throw new JudgeError("INVALID_RESPONSE");
+        return failed("INVALID_RESPONSE");
       }
       const assessment = parseAssessment(choice.message.content, evidenceBacked);
-      if (!assessment) throw new JudgeError("INVALID_RESPONSE");
+      if (!assessment) return failed("INVALID_RESPONSE");
       return { status: "complete", model, assessment, modelEvaluatedAt: new Date().toISOString() };
     } catch {
-      throw new JudgeError("INVALID_RESPONSE");
+      return failed("INVALID_RESPONSE");
     }
-  } catch (error) {
-    if (error instanceof JudgeError) throw error;
-    throw new JudgeError(signal.aborted ? "TIMEOUT" : "UPSTREAM_ERROR");
+  } catch {
+    return failed(signal.aborted ? "TIMEOUT" : "UPSTREAM_ERROR");
   }
 }
